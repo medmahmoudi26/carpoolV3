@@ -626,11 +626,65 @@ router.get('/detail/:id', function(req,res){
   });
 });
 
-//function to delete the redirect to session
+// Email and functions
+
+// requirements for email
+// template
+var reserv_template = fs.readFileSync("./email/reserv.ejs", "utf-8");
+var accept_template = fs.readFileSync("./email/accept.ejs", "utf-8");
+var trajet_template = fs.readFileSync("./email/trajet.ejs", "utf-8")
+
+// compile templates
+var reserv_compiled = ejs.compile(reserv_template);
+var accept_compiled = ejs.compile(accept_template);
+var trajet_compiled = ejs.compile(trajet_template);
+
+var transporter = nodemailer.createTransport({
+  service: '@marouen-kanoun',
+  auth: {
+    user: 'easytraveltechera@gmail.com',
+    pass: '20104957'
+  }
+});
+
+function sendmails(depart, etape, dest, req, date, time) {
+  // getting the, req, allezDate, allezTime email list from data base
+  var mailist = []
+  user.find({$or:[{bestdepart: depart}, {bestdepart: etape}], bestdest: dest}, function (error, users) {
+    users.forEach(function (user) {
+      mailist.push(user.email);
+    });
+  });
+  var mailOptions = {
+    from: 'easytraveltechera@gmail.com',
+    to: mailist,
+    subject: 'Nouveau trajet de '+depart+" vers "+dest,
+    html: ejs.render(trajet_template,{user: req.session.user, depart: depart, dest: dest, etape: etape, date: date, time: time})
+    /*text: req.session.user.nom+' a proposé un tajet de '+depart+" vers "+dest+" passant par "+etape*/
+  };
+  transporter.sendMail(mailOptions, function (error, result) {
+    if (error) console.log("[ !! ] Error: "+error);
+    if (result) console.log("[ !! ] Mail Sent: "+result.info);
+  });
+}
+
+//####### Functions
+
+// add 0 to time number
+function addzero(num) {
+  var numStr = num.toString()
+  if (numStr.length == 1) {
+    numStr = "0"+numStr
+  }
+  return numStr
+}
+
+// remove redirection
 function rmredire(req,res){
   if (req.session.redire){
     delete req.session.redire;
   }
 }
 
+// exporting
 module.exports = router

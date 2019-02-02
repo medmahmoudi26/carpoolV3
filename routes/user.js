@@ -29,7 +29,7 @@ router.get('/login', function(req,res){
   if(!req.session.user){
   res.render('login');
 }else {
-  res.redirect('/profile');
+  res.redirect('profile');
 }
 });
 
@@ -37,7 +37,7 @@ router.get('/login', function(req,res){
 router.get('/register', function(req,res){
   rmredire(req,res);
   if (req.session.user){
-    res.redirect('/user');
+    res.redirect('profile');
   }
   else {
     res.render('register');
@@ -55,10 +55,12 @@ router.get('/profile', function (req,res) {
       if (reservation) res.render('profile', {user:req.session.user, reservations:reservation});
     });
   }else {
-    req.session.redire = '/profile';
+    req.session.redire = '/user/profile';
     res.redirect('notlogged');
   }
 });
+
+// if user trying to access something without logging in
 router.get('/notlogged', function(req,res){
   res.render('notlogged')
 });
@@ -75,13 +77,14 @@ router.get('/mestrajets', function (req,res) {
   if (req.session.user) {
     trajet.find({userid: req.session.user._id}, function (error, proposition) {
       if (error) res.render('error', {error: error});
-      if (proposition) res.render('mestrajets', {propo: proposition, user:req.session.user});
+      else if (proposition) res.render('mestrajets', {propo: proposition, user:req.session.user});
     });
   }else {
-    req.session.redire = '/mestrajets';
+    req.session.redire = '/user/mestrajets';
     res.redirect('notlogged');
   }
 });
+
 //mes trajets(trajets that I )
 router.get('/mesreservations', function (req,res) {
   rmredire(req,res);
@@ -91,7 +94,7 @@ router.get('/mesreservations', function (req,res) {
       if (reserv) res.render('mesreservations', {reserv:reserv, user: req.session.user});
     });
   }else {
-    req.session.redire = '/mesreservations';
+    req.session.redire = '/user/mesreservations';
     res.redirect('notlogged');
   }
 });
@@ -101,7 +104,7 @@ router.get('/mesreservations', function (req,res) {
 // posts
 //login
 router.post('/login', function(req,res){
-  if (req.session.user) res.redirect("/profile")
+  if (req.session.user) res.redirect("profile")
   if (req.body.submit){
     user.findOne({
       email: req.body.email
@@ -111,11 +114,9 @@ router.post('/login', function(req,res){
         req.session.user = user;
         console.log(req.session.user);
         if (req.session.redire){
-          console.log("[+] redirection: "+req.session.redire);
           res.redirect(req.session.redire);
         }else {
-          console.log("redirecting to profile");
-          res.redirect('/profile');
+          res.redirect('profile');
         }
       }else {
         res.render('notlogged',{ps:"ces coordonnés sont fausses, réessayez"});
@@ -128,7 +129,7 @@ router.post('/login', function(req,res){
 
 //register
 router.post('/register', function(req,res){
-  if (req.session.user) res.redirect("/profile");
+  if (req.session.user) res.redirect("profile");
   if (req.body.password == req.body.confirm){
     var hashedpass = bcrypt.hashSync(req.body.password, 10);
     user.create({
@@ -141,7 +142,6 @@ router.post('/register', function(req,res){
       facebook    : req.body.facebook,
       bestdepart  : req.body.bestdepart,
       bestdest    : req.body.bestdest
-
     }, function(error, user){
       if (error){ res.render('register', {ps:error});}
       else {
@@ -160,7 +160,7 @@ router.post('/register', function(req,res){
           }
         });
         // redirect user to profile
-        res.redirect('/profile');
+        res.redirect('profile');
       }
     });
   }else {
