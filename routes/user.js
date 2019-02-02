@@ -21,16 +21,16 @@ router.get("/", function (req,res) {
   } else {
     res.redirect("profile");
   }
-})
+});
 
 //login
 router.get('/login', function(req,res){
   rmredire(req,res);
   if(!req.session.user){
-  res.render('login');
-}else {
-  res.redirect('profile');
-}
+    res.render('login');
+  } else {
+    res.redirect('profile');
+  }
 });
 
 //register

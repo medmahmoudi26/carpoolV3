@@ -14,7 +14,7 @@
     "date-only": "^1.0.1",
     "dates-between": "^1.1.0",
     "ejs": "^2.6.1",
-    "express": "^4.16.3",
+    "express": "^4.16.4",
     "express-session": "^1.15.6",
     "hogan.js": "^3.0.2",
     "mongoose": "^5.2.4",

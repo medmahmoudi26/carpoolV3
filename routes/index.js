@@ -1,26 +1,35 @@
-const express = require('express');
-var router = express.Router()
+const express  = require('express');
 const mongoose = require('mongoose');
+const bcrypt   = require('bcrypt');
+const session  = require('express-session');
+const ejs      = require('ejs');
+const fs       = require('fs');
+const DateOnly = require('date-only');
+const nodemailer = require('nodemailer');
 
 var user = require("../models/user.js")
-const trajet = require('../models/trajet.js');
-const reserver = require('../models/reserver.js');
-const cardispo = require('../models/cardispo.js');
-const cars = require('../models/cars.js');
+var trajet = require('../models/trajet.js');
+var reserver = require('../models/reserver.js');
+var cardispo = require('../models/cardispo.js');
+var cars = require('../models/cars.js');
+
+var router = express.Router()
 
   // ***** routes *****
 
 // GET REQUESTS
+
 //index
 router.get('/', function (req,res) {
   console.log(req.session);
   rmredire(req,res);
   if (req.session.user){
   res.render('index',{user: req.session.user});
-}else {
+  } else {
   res.render('index');
-}
+  }
 });
+
 router.get('/index', function(req,res){
   rmredire(req,res);
   if (req.session.user){
@@ -29,7 +38,8 @@ router.get('/index', function(req,res){
   res.render('index');
 }
 });
-//propser
+
+// main page for proposition to choose proposition type
 router.get('/proposer', function(req,res){
   rmredire(req,res);
   if (!req.session.user){
@@ -39,7 +49,8 @@ router.get('/proposer', function(req,res){
     res.render('proposer', {user:req.session.user});
   }
 });
-// si la proposition est aller seulement
+
+// if proposition is simple
 router.get("/aller", function (req,res) {
   rmredire(req,res);
   if (!req.session.user) {
@@ -48,7 +59,8 @@ router.get("/aller", function (req,res) {
     res.render("allerProp1", {user: req.session.user});
   }
 });
-// si la proposition est aller et retour
+
+// if proposition is complicated
 router.get("/aller&retour", function (req, res) {
   if (!req.session.user) {
     res.redirect("/user/notlogged");
@@ -59,7 +71,7 @@ router.get("/aller&retour", function (req, res) {
 
 // POST REQUESTS
 
-//chercher un trajet
+// look for path
 router.post('/chercher', function(req,res){
   if(req.body.depart && req.body.dest && req.body.date){
     req.body.date = new Date(req.body.date+" UTC")
@@ -90,9 +102,10 @@ router.post('/chercher', function(req,res){
     });
   }
 });
+
 //proposer aller step 1
 router.post("/aller1", function (req,res) {
-  if (!req.session.user) res.redirect("notlogged");
+  if (!req.session.user) res.redirect("/user/notlogged");
   if (!req.body.allerDate && !req.body.finDate && req.body.allezTime && req.body.finTime && req.body.etab) res.render("error", {error: "une erreure s'est produite"})
   req.body.allezDate = new Date(req.body.allezDate + " UTC"); //convert to date-only object the allez et fin date
   req.body.finDate   = new Date(req.body.finDate + " UTC");
@@ -295,7 +308,7 @@ router.post("/aller2", function (req,res) {
 
 //proposer aller&retour step 1
 router.post("/aller&retour1", function (req,res) {
-  if (!req.session.user) res.redirect("notlogged");
+  if (!req.session.user) res.redirect("/user/notlogged");
   if (!req.body.allerDate && !req.body.finDate && req.body.allezTime && req.body.finTime && req.body.etab) res.render("error", {error: "une erreure s'est produite"})
   req.body.allezDate = new Date(req.body.allezDate+" UTC"); //convert to date-only object the allez et fin date
   req.body.finDate   = new Date(req.body.finDate+" UTC");
