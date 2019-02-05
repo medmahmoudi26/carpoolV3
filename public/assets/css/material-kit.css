@@ -60,6 +60,7 @@ main,
 nav,
 section {
   display: block;
+
 }
 
 body {
@@ -7534,7 +7535,7 @@ button.bg-dark:focus {
 }
 
 .p-5 {
-  padding: 3rem !important;
+  padding: 3rem ;
 }
 
 .pt-5,
@@ -22322,6 +22323,20 @@ select.selectpicker {
   .card{
     width: 1000px;
   }
+.indexd{
+  margin-left:0%;margin-right:8%;margin-top:8%;width:30rem;display: inline-block;
+
+}
+.indexp{
+
+  width:100%;
+}
+.indexc{
+
+  width: 500px;display:inline-block;height:550px;
+}
+
+
 
  }
   @media screen and (max-width: 1200px) {
@@ -22358,6 +22373,23 @@ select.selectpicker {
    .choix{
      margin-top:0px;
    }
+   .indexd{
+     width: ;
+
+   }
+   .indexp{
+
+     width:20rem;
+   }
+   .indexb{
+
+     width:22rem;
+   }
+   .indexc{
+
+     width: auto;
+   }
+
       }
       .autocomplete {
         /*the container must be positioned relative:*/
