@@ -1,11 +1,12 @@
-const express  = require('express');
-const mongoose = require('mongoose');
-const bcrypt   = require('bcrypt');
-const session  = require('express-session');
-const ejs      = require('ejs');
-const fs       = require('fs');
-const DateOnly = require('date-only');
+const express    = require('express');
+const mongoose   = require('mongoose');
+const bcrypt     = require('bcrypt');
+const session    = require('express-session');
+const ejs        = require('ejs');
+const fs         = require('fs');
+const DateOnly   = require('date-only');
 const nodemailer = require('nodemailer');
+const jwt        = require('jsonwebtoken');
 
 // models
 var user      = require('../models/user.js')
@@ -99,9 +100,6 @@ router.get('/mesreservations', function (req,res) {
   }
 });
 
-
-
-// posts
 //login
 router.post('/login', function(req,res){
   if (req.session.user) res.redirect("profile")
@@ -112,7 +110,16 @@ router.post('/login', function(req,res){
       if (error) res.render('error', {error:error});
       if (user){ if (bcrypt.compareSync(req.body.pass, user.pass)) {
         req.session.user = user;
-        console.log(req.session.user);
+        const token = jwt.sign({
+          email: user.email,
+          userId: user._id
+          },
+          "secret",
+          {
+            expiresIn: "1h"
+          }
+        );
+        req.session.user.token = token;
         if (req.session.redire){
           res.redirect(req.session.redire);
         }else {
@@ -124,48 +131,55 @@ router.post('/login', function(req,res){
         res.render("notlogged",{ps:"cet email n'existe pas"})
       }
     });
-    };
-  });
+  }
+});
 
 //register
 router.post('/register', function(req,res){
   if (req.session.user) res.redirect("profile");
-  if (req.body.password == req.body.confirm){
-    var hashedpass = bcrypt.hashSync(req.body.password, 10);
-    user.create({
-      nom         : req.body.nom,
-      prenom      : req.body.prenom,
-      email       : req.body.email,
-      pass        : hashedpass,
-      year        : req.body.year,
-      number      : req.body.number,
-      facebook    : req.body.facebook,
-      bestdepart  : req.body.bestdepart,
-      bestdest    : req.body.bestdest
-    }, function(error, user){
-      if (error){ res.render('register', {ps:error});}
-      else {
-        req.session.user = user;
-        // send registeration email
-        var mailoptions = {
-          to: user.email,
-          from: "easytraveltechera@gmail.com",
-          subject: "Compte crée !",
-          text: "Bienvenu parmis nous !"
-        }
-        transporter.sendMail(mailoptions, function (error, success) {
-          if (error) console.log("Error => "+error);
-          else if (success){
-            console.log("Email Sent "+email.info );
+  user.findOne({email: req.body.email}, function (err, exist) {
+    if (err) res.render("register", {ps:error});
+    else if (exist.length < 1) {
+      res.render("register", {ps: "cet email existe déja"});
+    }else {
+      if (req.body.password == req.body.confirm){
+        var hashedpass = bcrypt.hashSync(req.body.password, 10);
+        user.create({
+          nom         : req.body.nom,
+          prenom      : req.body.prenom,
+          email       : req.body.email,
+          pass        : hashedpass,
+          year        : req.body.year,
+          number      : req.body.number,
+          facebook    : req.body.facebook,
+          bestdepart  : req.body.bestdepart,
+          bestdest    : req.body.bestdest
+        }, function(error, user){
+          if (error){ res.render('register', {ps:error});}
+          else {
+            req.session.user = user;
+            // send registeration email
+            var mailoptions = {
+              to: user.email,
+              from: "easytraveltechera@gmail.com",
+              subject: "Compte crée !",
+              text: "Bienvenu parmis nous !"
+            }
+            transporter.sendMail(mailoptions, function (error, success) {
+              if (error) console.log("Error => "+error);
+              else if (success){
+                console.log("Email Sent "+email.info );
+              }
+            });
+            // redirect user to profile
+            res.redirect('profile');
           }
         });
-        // redirect user to profile
-        res.redirect('profile');
+      }else {
+        res.render('register', {ps:"please confirm your password carefully"});
       }
-    });
-  }else {
-  res.render('register', {ps:"please confirm your password carefully"});
-  }
+    }
+  });
 });
 
 //update profile

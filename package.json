@@ -17,6 +17,7 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "hogan.js": "^3.0.2",
+    "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.2.4",
     "mongoose-dateonly": "^1.0.6",
     "nodemailer": "^4.7.0",
