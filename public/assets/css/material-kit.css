@@ -22362,7 +22362,7 @@ select.selectpicker {
 
      @media screen and (max-width: 770px) {
        .card{
-         width: auto;
+        min-width:0px;
        }
    .row {
      display: flex;
@@ -22388,6 +22388,7 @@ select.selectpicker {
    .indexc{
 
      width: auto;
+     min-width: 50px;
    }
 
       }
