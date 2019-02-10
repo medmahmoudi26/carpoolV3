@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" href="./assets/img/.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    mes reservations
+    mes Trajets
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -57,7 +57,7 @@
               <a href="/login" class="dropdown-item">
                 <i class="material-icons">face</i> Profile
               </a>
-              <a href="/mestrajets" class="dropdown-item">
+              <a href="/mestragets" class="dropdown-item">
                 <i class="material-icons">directions</i> Trajets
               </a>
               <a href="/mesreservations" class="dropdown-item">
@@ -88,27 +88,22 @@
 
      </div>
      <div class="col-sm">
-           <h2 class="text-center font-weight-normal"style="color:#112D4E;padding-bottom:40px;padding-top:40px;">Reservations <h2>
-          <% if ( reserv != '') { %> <% reserv.forEach(function(reserv){ %>
+           <h2 class="text-center font-weight-normal"style="color:#112D4E;padding-bottom:40px;padding-top:40px;"> Trajets <h2>
+        <% if (propo != ''){%> <% propo.forEach(function(propo) { %>
        <div class="card" style="width: ;display:inline-block;height:">
          <div class="card-body">
-             <h3 style="padding:20px;">vous avez reservé avec <%= reserv.proposername %></h3>
-           <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">De:</strong><%= reserv.depart %><br><strong style="margin-right:10px;margin-left:00px;">Vers:</strong><%= reserv.destination %></h4>
-              <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Le:</strong><%= reserv.date %></h4>
 
+            <h3 style="padding:20px;">vous avez proposé un trajet</h3>
+           <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">De:</strong> <%= propo.depart %><br><strong style="margin-right:10px;margin-left:00px;">Vers:</strong><%= propo.dest %></h4>
+             <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Le:</strong> <%= propo.allezDate %><br><strong style="margin-right:10px;margin-left:00px;">Heure:</strong><%= propo.allezTime %></h4>
+             <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Etape:</strong><%= propo.etape %>%><br><strong style="margin-right:10px;margin-left:00px;">Véhicule:</strong> <%= propo.car %></h4>
 
-
-<% if (reserv.reserved == true) {%>
-             <div style="padding-top:;"class="">
-              <h5 style="color:#3f72af;">votre reservation a été accepter</h5>
-           </div>
-<% } %>
-
+               <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Nombre de Places:</strong> <% if (propo.places != 0) { %> <%= propo.places %> <% }else { %> tous les places sont reservées <% } %><h4>
      </div>
      </div>
-     <% })} else { %>
-        <h3 class="text-center font-weight-normal"style="color:#112D4E;padding-bottom:180px;padding-top:100px;">vous n'avez fait aucune reservation<h3>
-       <% } %>
+<% }) %> <% }else{ %>
+        <h3 class="text-center font-weight-normal"style="color:#112D4E;padding-bottom:180px;padding-top:100px;">vous n'avez proposé aucun trajet<h3>
+  <% } %>
      </div>
      <div class="col-sm">
 
