@@ -1,0 +1,14 @@
+<%if (typeof errors != 'undefined') {%>
+  <% errors.forEach(function (error) { %>
+    <%= error %>
+  <% }) %>
+<% } %>
+<%if (typeof error_msg != '') {%>
+  <%= error_msg %>
+<% } %>
+<%if (typeof success_msg != '') {%>
+  <%= success_msg %>
+<% } %>
+<%if (typeof error != '') {%>
+  <%= error %>
+<% } %>

@@ -1,17 +1,19 @@
-const express  = require('express');
-const mongoose = require('mongoose');
-const bcrypt   = require('bcrypt');
-const session  = require('express-session');
-const ejs      = require('ejs');
-const fs       = require('fs');
-const DateOnly = require('date-only');
-const nodemailer = require('nodemailer');
+const express     = require('express');
+const mongoose    = require('mongoose');
+const bcrypt      = require('bcrypt');
+const session     = require('express-session');
+const ejs         = require('ejs');
+const fs          = require('fs');
+const DateOnly    = require('date-only');
+const nodemailer  = require('nodemailer');
+const passport    = require('passport');
+const {checkAuth} = require('../middleware/check-auth');
 
-var user = require("../models/user.js")
-var trajet = require('../models/trajet.js');
+var user     = require("../models/user.js")
+var trajet   = require('../models/trajet.js');
 var reserver = require('../models/reserver.js');
 var cardispo = require('../models/cardispo.js');
-var cars = require('../models/cars.js');
+var cars     = require('../models/cars.js');
 
 var router = express.Router()
 
@@ -20,53 +22,31 @@ var router = express.Router()
 // GET REQUESTS
 
 //index
-router.get('/', function (req,res) {
-  console.log(req.session);
-  rmredire(req,res);
-  if (req.session.user){
-  res.render('index',{user: req.session.user});
+router.get('/', function(req,res){
+  if (req.isAuthenticated()) {
+    res.render('index', {user:req.user});
   } else {
-  res.render('index');
+    res.render('index')
   }
 });
 
-router.get('/index', function(req,res){
-  rmredire(req,res);
-  if (req.session.user){
-  res.render('index',{user: req.session.user});
-}else {
-  res.render('index');
-}
+router.get('/index', function (req,res) {
+  res.redirect('/')
 });
 
 // main page for proposition to choose proposition type
-router.get('/proposer', function(req,res){
-  rmredire(req,res);
-  if (!req.session.user){
-    req.session.redire = '/proposer';
-    res.redirect('/user/notlogged');
-  }else {
-    res.render('proposer', {user:req.session.user});
-  }
+router.get('/proposer', checkAuth, function(req,res){
+  res.render('proposer', {user: req.user})
 });
 
 // if proposition is simple
-router.get("/aller", function (req,res) {
-  rmredire(req,res);
-  if (!req.session.user) {
-    res.redirect("/user/notlogged");
-  }else {
-    res.render("allerProp1", {user: req.session.user});
-  }
+router.get("/aller", checkAuth, function (req,res) {
+  res.render("allerProp1", {user: req.user});
 });
 
 // if proposition is complicated
-router.get("/aller&retour", function (req, res) {
-  if (!req.session.user) {
-    res.redirect("/user/notlogged");
-  }else {
-    res.render("propBoth1", {user: req.session.user});
-  }
+router.get("/aller&retour", checkAuth, function (req, res) {
+  res.render("propBoth1", {user: req.user});
 });
 
 // POST REQUESTS
@@ -91,8 +71,8 @@ router.post('/chercher', function(req,res){
         date_object : {$gte: req.body.date}
       }, function (error, etape) {
         if (error) res.render('error',{error: error});
-        if (req.session.user){
-          res.render('found',{allant: allant, etape:etape, user:req.session.user});
+        if (req.isAuthenticated()){
+          res.render('found',{allant: allant, etape:etape, user:req.user});
         }else {
           //transfer date object to iso string
           if (etape.allezDate) etape.allezDate = etape.allezDate.toISOString();
@@ -104,14 +84,13 @@ router.post('/chercher', function(req,res){
 });
 
 //proposer aller step 1
-router.post("/aller1", function (req,res) {
-  if (!req.session.user) res.redirect("/user/notlogged");
+router.post("/aller1", checkAuth, function (req,res) {
   if (!req.body.allerDate && !req.body.finDate && req.body.allezTime && req.body.finTime && req.body.etab) res.render("error", {error: "une erreure s'est produite"})
   req.body.allezDate = new Date(req.body.allezDate + " UTC"); //convert to date-only object the allez et fin date
   req.body.finDate   = new Date(req.body.finDate + " UTC");
   var etab           = req.body.etab // etablissement
   // if date of start is bigger than the final date tell error
-  if (req.body.allezDate > req.body.finDate) res.render("allerProp1", {user: req.session.user, error: "les dates ne sont pas valides"});
+  if (req.body.allezDate > req.body.finDate) res.render("allerProp1", {user: req.user, error: "les dates ne sont pas valides"});
   cardispo.find({
     $or : [
       {
@@ -130,23 +109,24 @@ router.post("/aller1", function (req,res) {
         etab          : etab
     }]
   }, function (error, cars) {
-    console.log("[+] Finding car")
-    if (error) res.render("allerProp1", {user: req.session.user, error:error});
+    if (error) res.render("allerProp1", {user: req.user, error:error});
     if (cars) {
       req.session.aller1 = req.body; // the body request will be in session to be needed in step 2
       console.log(req.body);
-      res.render("allerProp2", {user:req.session.user, aller1: req.body, cars:cars });
+      res.render("allerProp2", {user:req.user, aller1: req.body, cars:cars });
     }
   });
 });
 
 // step 2 of reserving a path
-router.post("/aller2", function (req,res) {
-  if (!req.session.aller1 || !req.session.user) res.redirect("/user/notlogged");
+router.post("/aller2", checkAuth, function (req,res) {
+  if (!req.session.aller1) {
+    res.redirect("/proposer")
+  }
   var cardispo_id   = req.body.car;
   var desc  = req.body.desc;
   cardispo.findOne({_id: cardispo_id}, function (error,cardispo_result) {
-    if (error) res.render("allerProp1", {user: req.session.user, error: error})
+    if (error) res.render("allerProp1", {user: req.user, error: error})
     var car = cardispo_result
     console.log(car.brand_new);
     if (car.brand_new === true) {
@@ -167,7 +147,7 @@ router.post("/aller2", function (req,res) {
           places        : car.places,
           etab          : car.etab
         }, function (error, final_car) {
-          if (error) res.render("allerProp1", {user:req.session.user, error: error})
+          if (error) res.render("allerProp1", {user:req.user, error: error})
           else if (final_car) {
           var allezDate = new Date(req.session.aller1.allezDate)
           var hour      = allezDate.getUTCHours()
@@ -177,9 +157,9 @@ router.post("/aller2", function (req,res) {
           var allezTime = houred+":"+mined // retreive the time in a string format
           var allezDate = new DateOnly(allezDate).toISOString() // date in string format
             trajet.create({
-              userid      : req.session.user._id,
-              nom         : req.session.user.nom,
-              prenom      : req.session.user.prenom,
+              userid      : req.user._id,
+              nom         : req.user.nom,
+              prenom      : req.user.prenom,
               depart      : req.session.aller1.depart,
               etape       : req.session.aller1.etape,
               dest        : req.session.aller1.dest,
@@ -190,9 +170,9 @@ router.post("/aller2", function (req,res) {
               car         : car.car,
               description : desc
             }, function (error , trajet) {
-              if (error) res.render("allerProp1", {user:req.session.user, error: error});
+              if (error) res.render("allerProp1", {user:req.user, error: error});
               if (trajet) {
-                res.render("success", {trajet: trajet, user: req.session.user})
+                res.render("success", {trajet: trajet, user: req.user})
                 sendmails(trajet.depart, trajet.etape, trajet.dest, req, allezDate, allezTime);
               }
             });
@@ -207,7 +187,7 @@ router.post("/aller2", function (req,res) {
             half_dispo  : false
           }
         }, function (error, result_car) {
-          if (error) res.render('error', {user: req.session.user, error:error});
+          if (error) res.render('error', {user: req.user, error:error});
           else if (result_car) {
             cardispo.create({
               brand_new     : false, // new table created with user journey's end date pointing to the beginning of the free time of the car
@@ -217,7 +197,7 @@ router.post("/aller2", function (req,res) {
               etab          : car.etab,
               places        : car.places
             }, function (error, result_car2) {
-              if (error) res.render('allerProp1', {user: req.session.user, error: error});
+              if (error) res.render('allerProp1', {user: req.user, error: error});
               else if (result_car2) {
                 var allezDate = new Date(req.session.aller1.allezDate)
                 var hour      = allezDate.getUTCHours()
@@ -227,9 +207,9 @@ router.post("/aller2", function (req,res) {
                 var allezTime = houred+":"+mined
                 var allezDate = new DateOnly(allezDate).toISOString()
                 trajet.create({
-                  userid      : req.session.user._id,
-                  nom         : req.session.user.nom,
-                  prenom      : req.session.user.prenom,
+                  userid      : req.user._id,
+                  nom         : req.user.nom,
+                  prenom      : req.user.prenom,
                   depart      : req.session.aller1.depart,
                   etape       : req.session.aller1.etape,
                   dest        : req.session.aller1.dest,
@@ -240,9 +220,9 @@ router.post("/aller2", function (req,res) {
                   car         : car.car,
                   description : desc
                 }, function (error , trajet) {
-                  if (error) res.render("aller1", {user:req.session.user, error: error});
+                  if (error) res.render("aller1", {user:req.user, error: error});
                   if (trajet) {
-                    res.render("success", {trajet: trajet, user: req.session.user});
+                    res.render("success", {trajet: trajet, user: req.user});
                     sendmails(trajet.depart, trajet.etape, trajet.dest, req, allezDate, allezTime);
                   }
                 });
@@ -257,7 +237,7 @@ router.post("/aller2", function (req,res) {
             half_dispo  : false // make car half dispo
           }
         }, function (error, result_car) {
-          if (error) res.render("allerProp1", {user:req.session.user, error: error});
+          if (error) res.render("allerProp1", {user:req.user, error: error});
           else if (result_car) {
             cardispo.create({
               brand_new     : false, // craeted a new table with same car options
@@ -268,7 +248,7 @@ router.post("/aller2", function (req,res) {
               places        : car.places,
               etab          : car.etab
             }, function (error, final_car) {
-              if (error) res.render("allerProp1", {user: req.session.user, error: error})
+              if (error) res.render("allerProp1", {user: req.user, error: error})
               else if (final_car) {
                 var allezDate = new Date(req.session.aller1.allezDate)
                 var hour      = allezDate.getUTCHours()
@@ -278,9 +258,9 @@ router.post("/aller2", function (req,res) {
                 var allezTime = houred+":"+mined
                 var allezDate = new DateOnly(allezDate).toISOString()
                 trajet.create({
-                  userid      : req.session.user._id,
-                  nom         : req.session.user.nom,
-                  prenom      : req.session.user.prenom,
+                  userid      : req.user._id,
+                  nom         : req.user.nom,
+                  prenom      : req.user.prenom,
                   depart      : req.session.aller1.depart,
                   etape       : req.session.aller1.etape,
                   dest        : req.session.aller1.dest,
@@ -291,9 +271,9 @@ router.post("/aller2", function (req,res) {
                   car         : car.car,
                   description : desc
                 }, function (error , trajet) {
-                  if (error) res.render("aller1", {user:req.session.user, error: error});
+                  if (error) res.render("aller1", {user:req.user, error: error});
                   if (trajet) {
-                    res.render("success", {trajet: trajet, user: req.session.user})
+                    res.render("success", {trajet: trajet, user: req.user})
                     sendmails(trajet.depart, trajet.etape, trajet.dest, req, allezDate, allezTime);
                   }
                 });
@@ -307,15 +287,14 @@ router.post("/aller2", function (req,res) {
 });
 
 //proposer aller&retour step 1
-router.post("/aller&retour1", function (req,res) {
-  if (!req.session.user) res.redirect("/user/notlogged");
+router.post("/aller&retour1", checkAuth, function (req,res) {
   if (!req.body.allerDate && !req.body.finDate && req.body.allezTime && req.body.finTime && req.body.etab) res.render("error", {error: "une erreure s'est produite"})
   req.body.allezDate = new Date(req.body.allezDate+" UTC"); //convert to date-only object the allez et fin date
   req.body.finDate   = new Date(req.body.finDate+" UTC");
   var etab           = req.body.etab // etablissement
   // if date of start is bigger than the final date tell error
   if (req.body.allezDate > req.body.finDate) {
-    res.render("propBoth1", {user: req.session.user, error: "les dates ne sont pas valides"});
+    res.render("propBoth1", {user: req.user, error: "les dates ne sont pas valides"});
   } else {
     cardispo.find({
       $or : [
@@ -336,29 +315,31 @@ router.post("/aller&retour1", function (req,res) {
       }]
     }, function (error, cars) {
       console.log("[+] Finding car")
-      if (error) res.render("propBoth1", {user: req.session.user, error:error});
+      if (error) res.render("propBoth1", {user: req.user, error:error});
       if (cars) {
         req.session.aller1 = req.body; // the body request will be in session to be needed in step 2
         console.log(req.body);
-        res.render("propBoth2", {user:req.session.user, aller1: req.body, cars:cars });
+        res.render("propBoth2", {user:req.user, aller1: req.body, cars:cars });
       }
     });
   }
 });
 
 // step 2 of reserving a path aller&retour
-router.post("/aller&retour2", function (req,res) {
-  if (!req.session.aller1 || !req.session.user) res.redirect("/user/notlogged");
+router.post("/aller&retour2", checkAuth, function (req,res) {
+  if (!req.session.aller1) {
+    res.redirect("/proposer")
+  }
   var cardispo_id           = req.body.car;
   var desc                  = req.body.desc;
   req.body.retourDepartDate = new Date(req.body.retourDepartDate+" UTC"); // date in utc time
   var finDate               = new Date(req.session.aller1.finDate)
   console.log(req.body.retourDepartDate);
   if (req.body.retourDepartDate > finDate) {
-    res.render("propBoth1", {user:req.session.user, error:"la date de retour n'est pas valide"})
+    res.render("propBoth1", {user:req.user, error:"la date de retour n'est pas valide"})
   } else {
     cardispo.findOne({_id: cardispo_id}, function (error,cardispo_result) {
-      if (error) res.render("allerProp1", {user: req.session.user, error: error})
+      if (error) res.render("allerProp1", {user: req.user, error: error})
       var car = cardispo_result
       if (car.brand_new === true) {
         cardispo.findOneAndUpdate({_id: cardispo_id}, {$set:
@@ -378,7 +359,7 @@ router.post("/aller&retour2", function (req,res) {
             places        : car.places,
             etab          : car.etab
           }, function (error, final_car) {
-            if (error) res.render("allerProp1", {user:req.session.user, error: error})
+            if (error) res.render("allerProp1", {user:req.user, error: error})
             else if (final_car) {
             var allezDate = new Date(req.session.aller1.allezDate)
             var hour      = allezDate.getUTCHours()
@@ -388,9 +369,9 @@ router.post("/aller&retour2", function (req,res) {
             var allezTime = houred+":"+mined // retreive the time in a string format
             var allezDate = new DateOnly(allezDate).toISOString() // date in string format
               trajet.create({
-                userid      : req.session.user._id,
-                nom         : req.session.user.nom,
-                prenom      : req.session.user.prenom,
+                userid      : req.user._id,
+                nom         : req.user.nom,
+                prenom      : req.user.prenom,
                 depart      : req.session.aller1.depart,
                 etape       : req.session.aller1.etape,
                 dest        : req.session.aller1.dest,
@@ -401,7 +382,7 @@ router.post("/aller&retour2", function (req,res) {
                 car         : car.car,
                 description : desc
               }, function (error , trajet1) {
-                if (error) res.render("allerProp1", {user:req.session.user, error: error});
+                if (error) res.render("allerProp1", {user:req.user, error: error});
                 if (trajet1) {
                   sendmails(trajet1.depart, trajet1.etape, trajet1.dest, req, allezDate, allezTime);
                   var retourDepartDate = new Date(req.body.retourDepartDate)
@@ -412,9 +393,9 @@ router.post("/aller&retour2", function (req,res) {
                   var allezTime        = houred+":"+mined // retreive the time in a string format
                   var retourDepartDate = new DateOnly(retourDepartDate).toISOString() // date in string format
                   trajet.create({
-                    userid      : req.session.user._id,
-                    nom         : req.session.user.nom,
-                    prenom      : req.session.user.prenom,
+                    userid      : req.user._id,
+                    nom         : req.user.nom,
+                    prenom      : req.user.prenom,
                     depart      : req.session.aller1.dest,
                     etape       : req.session.aller1.etape,
                     dest        : req.session.aller1.depart,
@@ -425,10 +406,10 @@ router.post("/aller&retour2", function (req,res) {
                     car         : car.car,
                     description : desc
                   }, function (error, trajet2) {
-                    if (error) res.render("propBoth2", {user: req.session.user, error: error});
+                    if (error) res.render("propBoth2", {user: req.user, error: error});
                     else if (trajet2){
                       sendmails(trajet2.depart, trajet2.etape, trajet2.dest, req, allezDate, allezTime);
-                      res.render("success", {trajet: trajet1, user: req.session.user, trajet2: trajet2});
+                      res.render("success", {trajet: trajet1, user: req.user, trajet2: trajet2});
                     }
                   });
                 }
@@ -445,7 +426,7 @@ router.post("/aller&retour2", function (req,res) {
               half_dispo  : false
             }
           }, function (error, result_car) {
-              if (error) res.render("error", {user:req.session.user, error: error});
+              if (error) res.render("error", {user:req.user, error: error});
               cardispo.create({
                 brand_new     : false,
                 car           : car.car,
@@ -454,7 +435,7 @@ router.post("/aller&retour2", function (req,res) {
                 etab          : req.session.aller1.etab,
                 places        : car.places
               }, function (error, result_car2) {
-              if (error) res.render('error', {user: req.session.user, error:error});
+              if (error) res.render('error', {user: req.user, error:error});
               else if (result_car) {
                 var allezDate = new Date(req.session.aller1.allezDate)
                 var hour      = allezDate.getUTCHours()
@@ -464,9 +445,9 @@ router.post("/aller&retour2", function (req,res) {
                 var allezTime = houred+":"+mined
                 var allezDate = new DateOnly(req.session.aller1.allezDate).toISOString()
                 trajet.create({
-                  userid      : req.session.user._id,
-                  nom         : req.session.user.nom,
-                  prenom      : req.session.user.prenom,
+                  userid      : req.user._id,
+                  nom         : req.user.nom,
+                  prenom      : req.user.prenom,
                   depart      : req.session.aller1.depart,
                   etape       : req.session.aller1.etape,
                   dest        : req.session.aller1.dest,
@@ -477,7 +458,7 @@ router.post("/aller&retour2", function (req,res) {
                   car         : car.car,
                   description : desc
                 }, function (error , trajet1) {
-                  if (error) res.render("aller1", {user:req.session.user, error: error});
+                  if (error) res.render("aller1", {user:req.user, error: error});
                   if (trajet1) {
                     sendmails(trajet1.depart, trajet1.etape, trajet1.dest, req, allezDate, allezTime);
                     var retourDepartDate = new Date(req.body.retourDepartDate)
@@ -488,9 +469,9 @@ router.post("/aller&retour2", function (req,res) {
                     var allezTime        = houred+":"+mined // retreive the time in a string format
                     var retourDepartDate = new DateOnly(retourDepartDate).toISOString() // date in string format
                     trajet.create({
-                      userid      : req.session.user._id,
-                      nom         : req.session.user.nom,
-                      prenom      : req.session.user.prenom,
+                      userid      : req.user._id,
+                      nom         : req.user.nom,
+                      prenom      : req.user.prenom,
                       depart      : req.session.aller1.dest,
                       etape       : req.session.aller1.etape,
                       dest        : req.session.aller1.depart,
@@ -501,10 +482,10 @@ router.post("/aller&retour2", function (req,res) {
                       car         : car.car,
                       description : desc
                     }, function (error, trajet2) {
-                      if (error) res.render("propBoth2", {user: req.session.user, error: error});
+                      if (error) res.render("propBoth2", {user: req.user, error: error});
                       else if (trajet2){
                         sendmails(trajet2.depart, trajet2.etape, trajet2.dest, req, allezDate, allezTime);
-                        res.render("success", {trajet: trajet1, user: req.session.user, trajet2: trajet2});
+                        res.render("success", {trajet: trajet1, user: req.user, trajet2: trajet2});
                       }
                     });
                   }
@@ -519,7 +500,7 @@ router.post("/aller&retour2", function (req,res) {
               half_dispo  : false
             }
           }, function (error, result_car) {
-            if (error) res.render("allerProp1", {user:req.session.user, error: error});
+            if (error) res.render("allerProp1", {user:req.user, error: error});
             else if (result_car) {
               cardispo.create({
                 brand_new     : false,
@@ -530,7 +511,7 @@ router.post("/aller&retour2", function (req,res) {
                 etab          : car.etab,
                 places        : car.places
               }, function (error, final_car) {
-                if (error) res.render("allerProp1", {user: req.session.user, error: error})
+                if (error) res.render("allerProp1", {user: req.user, error: error})
                 else if (final_car) {
                   var allezDate = new Date(req.session.aller1.allezDate)
                   var hour      = allezDate.getUTCHours()
@@ -540,9 +521,9 @@ router.post("/aller&retour2", function (req,res) {
                   var allezTime = houred+":"+mined
                   var allezDate = new DateOnly(allezDate).toISOString()
                   trajet.create({
-                    userid      : req.session.user._id,
-                    nom         : req.session.user.nom,
-                    prenom      : req.session.user.prenom,
+                    userid      : req.user._id,
+                    nom         : req.user.nom,
+                    prenom      : req.user.prenom,
                     depart      : req.session.aller1.depart,
                     etape       : req.session.aller1.etape,
                     dest        : req.session.aller1.dest,
@@ -553,7 +534,7 @@ router.post("/aller&retour2", function (req,res) {
                     car         : car.car,
                     description : desc
                   }, function (error , trajet1) {
-                    if (error) res.render("aller1", {user:req.session.user, error: error});
+                    if (error) res.render("aller1", {user:req.user, error: error});
                     if (trajet1) {
                       sendmails(trajet1.depart, trajet1.etape, trajet1.dest, req, allezDate, allezTime);
                       var retourDepartDate = new Date(req.body.retourDepartDate)
@@ -564,9 +545,9 @@ router.post("/aller&retour2", function (req,res) {
                       var allezTime        = houred+":"+mined // retreive the time in a string format
                       var retourDepartDate = new DateOnly(retourDepartDate).toISOString() // date in string format
                       trajet.create({
-                        userid      : req.session.user._id,
-                        nom         : req.session.user.nom,
-                        prenom      : req.session.user.prenom,
+                        userid      : req.user._id,
+                        nom         : req.user.nom,
+                        prenom      : req.user.prenom,
                         depart      : req.session.aller1.dest,
                         etape       : req.session.aller1.etape,
                         dest        : req.session.aller1.depart,
@@ -577,10 +558,10 @@ router.post("/aller&retour2", function (req,res) {
                         car         : car.car,
                         description : desc
                       }, function (error, trajet2) {
-                        if (error) res.render("propBoth2", {user: req.session.user, error: error});
+                        if (error) res.render("propBoth2", {user: req.user, error: error});
                         else if (trajet2){
                           sendmails(trajet2.depart, trajet2.etape, trajet2.dest, req, allezDate, allezTime);
-                          res.render("success", {trajet: trajet1, user: req.session.user, trajet2: trajet2});
+                          res.render("success", {trajet: trajet1, user: req.user, trajet2: trajet2});
                         }
                       });
                     }
@@ -596,11 +577,11 @@ router.post("/aller&retour2", function (req,res) {
 });
 
 // test add car
-router.get("/testcar", function (req,res) {
+router.get("/testcar", checkAuth, function (req,res) {
   res.render("testcar");
 })
 
-router.post("/testcar", function (req,res) {
+router.post("/testcar", checkAuth, function (req,res) {
     cars.create({
       mat:            req.body.mat,
       model:          req.body.model,
@@ -628,13 +609,14 @@ router.post("/testcar", function (req,res) {
 });
 
 //profile of another user
-router.get('/detail/:id', function(req,res){
-  rmredire(req,res)
+router.get('/detail/:id', checkAuth, function(req,res){
   user.findOne({_id:req.params.id}, function(error,result){
     if(error) {
-      res.render('error', {error:"le profil que vous chercher n'existe pas"});
-    }else {
-      res.render('details', {user:result});
+      res.render('error', {error: "le profil que vous chercher n'existe pas"});
+    } else if (!result) {
+      res.render('error', {error: "le profil que vous cherchez n'existe pas"});
+    } else {
+      res.render('details', {user: result});
     }
   });
 });
@@ -653,7 +635,7 @@ var accept_compiled = ejs.compile(accept_template);
 var trajet_compiled = ejs.compile(trajet_template);
 
 var transporter = nodemailer.createTransport({
-  service: '@marouen-kanoun',
+  service: 'gmail',
   auth: {
     user: 'easytraveltechera@gmail.com',
     pass: '20104957'
@@ -672,8 +654,8 @@ function sendmails(depart, etape, dest, req, date, time) {
     from: 'easytraveltechera@gmail.com',
     to: mailist,
     subject: 'Nouveau trajet de '+depart+" vers "+dest,
-    html: ejs.render(trajet_template,{user: req.session.user, depart: depart, dest: dest, etape: etape, date: date, time: time})
-    /*text: req.session.user.nom+' a proposé un tajet de '+depart+" vers "+dest+" passant par "+etape*/
+    html: ejs.render(trajet_template,{user: req.user, depart: depart, dest: dest, etape: etape, date: date, time: time})
+    /*text: req.user.nom+' a proposé un tajet de '+depart+" vers "+dest+" passant par "+etape*/
   };
   transporter.sendMail(mailOptions, function (error, result) {
     if (error) console.log("[ !! ] Error: "+error);

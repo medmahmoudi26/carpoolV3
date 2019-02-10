@@ -7,24 +7,38 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 const fs = require('fs');
-
-var datesBetween = require("dates-between");
-var DateOnly = require("date-only");
+const passport = require('passport');
+const flash = require('connect-flash');
 
 // declare app variable server and connect to database
 app = express();
 var server = require('http').createServer(app);
 var db = mongoose.connect('mongodb://localhost:27017/coVoiture'); // mongodb://user661:6KLXjWlQA5SNNiyy@mongo834:27017/admin
 
-//session
+// passport config
+require('./middleware/passport')(passport);
+
+//session and passport
 app.use(session({secret:'cocar'}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// flash
+app.use(flash());
+app.use(function (req,res,next) {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
+});
 
 //requrie models
-const trajet = require('./models/trajet.js');
-const user = require('./models/user.js');
-const reserver = require('./models/reserver.js');
-const cardispo = require('./models/cardispo.js');
-const cars = require('./models/cars.js');
+const trajet = require('./models/trajet');
+const user = require('./models/user');
+const reserver = require('./models/reserver');
+const cardispo = require('./models/cardispo');
+const cars = require('./models/cars');
+
 //set app and requirements
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname+'/public'));

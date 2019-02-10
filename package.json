@@ -11,6 +11,7 @@
   "dependencies": {
     "bcrypt": "^3.0.2",
     "body-parser": "^1.18.3",
+    "connect-flash": "^0.1.1",
     "date-only": "^1.0.1",
     "dates-between": "^1.1.0",
     "ejs": "^2.6.1",
@@ -22,6 +23,8 @@
     "mongoose-dateonly": "^1.0.6",
     "nodemailer": "^4.7.0",
     "nodemon": "^1.18.3",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "session": "^0.1.0",
     "socket.io": "^2.1.1"
   }
