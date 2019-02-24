@@ -13,7 +13,7 @@ const passport   = require('passport');
 const { checkAuth } = require('../middleware/check-auth');
 
 // models
-var user      = require('../models/user.js')
+var User      = require('../models/user.js')
 var reserver  = require('../models/reserver.js')
 var trajet    = require('../models/trajet.js')
 
@@ -50,12 +50,29 @@ router.get('/profile', checkAuth, function (req,res) {
   });
 });
 
-/*
-// if user trying to access something without logging in
-router.get('/notlogged', function(req,res){
-  res.render('notlogged')
+// password forget (user enters email)
+router.get('/forgot', function (req,res) {
+  if (req.user) {
+    req.flash("error_msg", "vous etes déja connecter");
+    res.redirect("/user/profile");
+  }
+  else res.render("forgot");
 });
-*/
+
+// password reset link
+router.get('/reset/:token', function (req,res) {
+  User.findOne({resetPasswordToken: req.params.token, resetPasswordExpires: {$gt: Date.now() } }, function (error, user) {
+    if (error) {
+      req.flash('error_msg', "une erreur s'est survenue");
+      res.redirect('back');
+    } else if (!user) {
+      req.flash("error_msg", "une erreur s'est survenue");
+      res.redirect("back");
+    } else {
+      res.render("reset");
+    }
+  });
+});
 
 //logoff
 router.get('/logoff', function(req,res){
@@ -80,51 +97,25 @@ router.get('/mesreservations', checkAuth, function (req,res) {
   });
 });
 
-/*
-//login
-router.post('/login', function(req,res){
-  if (req.user) res.redirect("profile")
-  if (req.body.submit){
-    user.findOne({
-      email: req.body.email
-    }, function(error,user){
-      if (error) res.render('error', {error:error});
-      if (user){ if (bcrypt.compareSync(req.body.pass, user.pass)) {
-        req.user = user;
-        var token = jwt.sign({
-          email: user.email,
-          userId: user._id
-          },
-          "secret",
-          {
-            expiresIn: "24h"
-          }
-        );
-        if (req.session.redire){
-          res.redirect(req.session.redire);
-        }else {
-          res.redirect('profile');
-        }
-      }else {
-        res.render('notlogged',{ps:"ces coordonnés sont fausses, réessayez"});
-      }}else {
-        res.render("notlogged",{ps:"cet email n'existe pas"})
-      }
-    });
-  }
+// Login
+router.post('/login', function (req,res, next) {
+  passport.authenticate('local', {
+    successRedirect: '/user/profile',
+    failureRedirect: '/user/login',
+    failureFlash: true
+  })(req, res, next);
 });
-*/
 
 //register
 router.post('/register', function(req,res){
-  user.findOne({email: req.body.email}, function (err, exist) {
+  User.findOne({email: req.body.email}, function (err, exist) {
     if (err) console.log(err);
     else if (exist) {
       res.render("register", {error: 'cet email existe déja'})
     }else {
       if (req.body.password == req.body.confirm){
         var hashedpass = bcrypt.hashSync(req.body.password, 10);
-        user.create({
+        User.create({
           nom         : req.body.nom,
           prenom      : req.body.prenom,
           email       : req.body.email,
@@ -167,7 +158,7 @@ router.post('/update', function (req,res) {
   if (!req.session.aller1) res.redirect("notlogged");
   if (req.body.submit){
     var hashedpass = bcrypt.hashSync(req.body.password, 10);
-    user.findOneAndUpdate({_id: req.user._id},{$set:{
+    User.findOneAndUpdate({_id: req.user._id},{$set:{
       nom        : req.body.nom,
       prenom     : req.body.prenom,
       year       : req.body.year,
@@ -192,6 +183,92 @@ router.post('/update', function (req,res) {
   }
 });
 
+// receiving password
+router.post("/forgot", function (req,res) {
+  if (req.user) {
+    res.redirect("/user/profile");
+  } else {
+    User.findOne({email: req.body.email}, function (err, user) {
+      if (err) {
+        req.flash("error_msg", "cet email n'appartient à aucun compte");
+        res.redirect("/user/forgot");
+      } else if (user) {
+        cryoto.randomBytes(20, function (err, buf) {
+          var token = buf.toString('hex');
+          user.update({
+            $set:{
+              resetPasswordToken: token,
+              resetPasswordExpires: Date.now() + 360000 // 1 hour
+            }
+          }, function (error, saved) {
+            if (error) {
+              req.flash('error_msg', error);
+              res.redirect("/user/forgot");
+            } else if (saved) {
+              var mailOptions = {
+                to: user.email,
+                from: 'easytraveltechera@gmail.com',
+                subject: 'Password Reset',
+                text: 'http://'+req.headers.host+'/reset/'+token+'\n\n'
+              }
+              transporter.sendMail(mailOptions, function (err) {
+                if (err) console.log('Reset mail failed => '+err);
+                console.log('Reset email sent');
+                res.render('sent');
+              })
+            }
+          });
+        });
+      }
+    });
+  }
+});
+
+// reset password
+router.post('/reset/:token', function (req,res) {
+  if (!req.isAutheticated()) {
+    req.flash("error_msg", "vous etes déja connecté");
+    res.redirect("/user/profile");
+  } else {
+    User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (error, user) {
+      if (error) {
+        req.flash("error_msg", "une erreur est survenue");
+        res.redirect("back");
+      } else if (!user) {
+        req.flash("error_msg", "une erreur est survenue"); // if token expired or not existant
+        res.redirect("back");
+      } else {
+        if (req.body.password === req.body.confirm) {
+          var hashedpass = bcrypt.hashSync(req.body.password, 10);
+          user.update({$set:{
+            password: hashedpass,
+            resetPasswordToken: undefined,
+            resetPasswordExpires: undefined
+          }}, function (error, user) {
+            req.login(user, function (err) {
+              var mailOptions = {
+                to: user.email,
+                from: 'easytraveltechera@gmail.com',
+                subject: 'Votre mot de passe est changé',
+                text: "le mot de passe de votre compte "+user.email+" est changé"
+              }
+              transporter.sendMail(mailOptions, function (error, sent) {
+                if (error) console.log("Error sending reset confirmation mail => "+error);
+                else if (sent) console.log("Confirmation reset mail sent");
+              });
+            });
+            req.flash("success_msg", "success votre mot de passe est correctement changé");
+            res.redirect("/user/profile");
+          });
+        } else {
+          req.flash("error_msg", "confirmer votre mot de passe correctement");
+          res.redirect("back");
+        }
+      }
+    });
+  }
+});
+
 // Email and functions
 
 // Transporter
@@ -211,15 +288,6 @@ function rmredire(req,res){
     delete req.session.redire;
   }
 }
-
-// Login two
-router.post('/login', function (req,res, next) {
-  passport.authenticate('local', {
-    successRedirect: '/user/profile',
-    failureRedirect: '/user/login',
-    failureFlash: true
-  })(req, res, next);
-});
 
 // ###### Exportation
 module.exports = router

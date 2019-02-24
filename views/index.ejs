@@ -51,20 +51,20 @@
              <%= user.prenom %>
             </a>
             <div class="dropdown-menu dropdown-with-icons">
-              <a href="/profile" class="dropdown-item">
+              <a href="/user/profile" class="dropdown-item">
                 <i class="material-icons">face</i> Profile
               </a>
-              <a href="/mestrajets" class="dropdown-item">
+              <a href="/user/mestrajets" class="dropdown-item">
                 <i class="material-icons">directions</i> Trajets
               </a>
-              <a href="/mesreservations" class="dropdown-item">
+              <a href="/user/mesreservations" class="dropdown-item">
                 <i class="material-icons">check</i> reservations
               </a>
 
             </div>
           </li>
           <li class="dropdown nav-item">
-            <a href="/logoff" class=" nav-link"style="color:#112D4E;font-size:15px;">
+            <a href="/user/logoff" class=" nav-link"style="color:#112D4E;font-size:15px;">
               Déconnection
             </a>
           </li>
@@ -84,12 +84,12 @@
 
             </li>
             <li class="dropdown nav-item">
-              <a href="/login" class=" nav-link"style="color:#112D4E;font-size:15px;">
+              <a href="/user/login" class=" nav-link"style="color:#112D4E;font-size:15px;">
                  Se connecter
               </a>
             </li>
             <li class="dropdown nav-item">
-              <a href="/register" class=" nav-link"style="color:#112D4E;font-size:15px;">
+              <a href="/user/register" class=" nav-link"style="color:#112D4E;font-size:15px;">
                  Créer un compte
               </a>
             </li>
@@ -137,7 +137,7 @@
         <div style="padding-top:20px;">
       <div class="form-group">
         <label for="exampleFormControlInput1">Date</label>
-        <input type="text" class="form-control datetimepicker" value="01/01/2018"id='datetimepicker' name="date" required >
+        <input type="text" class="form-control datetimepicker" id='datetimepicker' name="date" required >
       </div>
         </div>
       <div class="text-center">

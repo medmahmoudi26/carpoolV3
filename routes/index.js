@@ -629,11 +629,6 @@ var reserv_template = fs.readFileSync("./email/reserv.ejs", "utf-8");
 var accept_template = fs.readFileSync("./email/accept.ejs", "utf-8");
 var trajet_template = fs.readFileSync("./email/trajet.ejs", "utf-8")
 
-// compile templates
-var reserv_compiled = ejs.compile(reserv_template);
-var accept_compiled = ejs.compile(accept_template);
-var trajet_compiled = ejs.compile(trajet_template);
-
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {

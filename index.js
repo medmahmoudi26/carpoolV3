@@ -48,25 +48,12 @@ app.use(session({
   secret: 'covoiture'
 }));
 
-
 // routes
-
 var userRoutes  = require("./routes/user.js")
 var indexRoutes = require("./routes/index.js")
 
 app.use("/user", userRoutes)
 app.use("/", indexRoutes)
-
-
-
-// ######[Functions]#########
-
-//function to delete the redirect to session
-function rmredire(req,res){
-  if (req.session.redire){
-    delete req.session.redire;
-  }
-}
 
 //listen
 console.log("listening on port 80");
@@ -84,8 +71,6 @@ var trajet_template = fs.readFileSync("./email/trajet.ejs", "utf-8")
 var reserv_compiled = ejs.compile(reserv_template);
 var accept_compiled = ejs.compile(accept_template);
 var trajet_compiled = ejs.compile(trajet_template);
-
-
 
 // #########[sockets]#######
 var io = require('socket.io')(server);
