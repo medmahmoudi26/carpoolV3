@@ -8,14 +8,15 @@ const DateOnly   = require('date-only');
 const nodemailer = require('nodemailer');
 const jwt        = require('jsonwebtoken');
 const passport   = require('passport');
+const crypto     = require('crypto');
 
 // checking auth
 const { checkAuth } = require('../middleware/check-auth');
 
 // models
-var User      = require('../models/user.js')
-var reserver  = require('../models/reserver.js')
-var trajet    = require('../models/trajet.js')
+var User      = require('../models/user');
+var reserver  = require('../models/reserver');
+var trajet    = require('../models/trajet');
 
 // express router
 var router = express.Router()
@@ -63,13 +64,13 @@ router.get('/forgot', function (req,res) {
 router.get('/reset/:token', function (req,res) {
   User.findOne({resetPasswordToken: req.params.token, resetPasswordExpires: {$gt: Date.now() } }, function (error, user) {
     if (error) {
-      req.flash('error_msg', "une erreur s'est survenue");
-      res.redirect('back');
-    } else if (!user) {
       req.flash("error_msg", "une erreur s'est survenue");
-      res.redirect("back");
+      res.redirect("/");
+    } else if (!user) {
+      req.flash("error_msg", "cet token n'existe pas ou est exipiré");
+      res.redirect("/")
     } else {
-      res.render("reset");
+      res.render("reset", {token: req.params.token});
     }
   });
 });
@@ -157,13 +158,12 @@ router.post('/register', function(req,res){
 router.post('/update', function (req,res) {
   if (!req.session.aller1) res.redirect("notlogged");
   if (req.body.submit){
-    var hashedpass = bcrypt.hashSync(req.body.password, 10);
+    var hashedpass = bcrypt.hashSync(req.body.password, 10)
     User.findOneAndUpdate({_id: req.user._id},{$set:{
       nom        : req.body.nom,
       prenom     : req.body.prenom,
       year       : req.body.year,
       number     : req.body.number,
-      pass       : hashedpass,
       facebook   : req.body.facebook,
       bestdepart : req.body.bestdepart,
       bestdest   : req.body.bestdest
@@ -185,15 +185,16 @@ router.post('/update', function (req,res) {
 
 // receiving password
 router.post("/forgot", function (req,res) {
-  if (req.user) {
-    res.redirect("/user/profile");
+  if (req.isAutheticated) {
+    req.flash("error_msg", "vous etes déja connecté");
+    res.redirect("/");
   } else {
     User.findOne({email: req.body.email}, function (err, user) {
       if (err) {
         req.flash("error_msg", "cet email n'appartient à aucun compte");
         res.redirect("/user/forgot");
       } else if (user) {
-        cryoto.randomBytes(20, function (err, buf) {
+        crypto.randomBytes(20, function (err, buf) {
           var token = buf.toString('hex');
           user.update({
             $set:{
@@ -209,16 +210,19 @@ router.post("/forgot", function (req,res) {
                 to: user.email,
                 from: 'easytraveltechera@gmail.com',
                 subject: 'Password Reset',
-                text: 'http://'+req.headers.host+'/reset/'+token+'\n\n'
+                text: 'http://'+req.headers.host+'/user/reset/'+token+'\n\n'
               }
               transporter.sendMail(mailOptions, function (err) {
                 if (err) console.log('Reset mail failed => '+err);
                 console.log('Reset email sent');
                 res.render('sent');
-              })
+              });
             }
           });
         });
+      } else {
+        req.flash('error_msg', "email does not match any account");
+        res.redirect("back");
       }
     });
   }
@@ -226,9 +230,9 @@ router.post("/forgot", function (req,res) {
 
 // reset password
 router.post('/reset/:token', function (req,res) {
-  if (!req.isAutheticated()) {
+  if (req.isAuthenticated()) {
     req.flash("error_msg", "vous etes déja connecté");
-    res.redirect("/user/profile");
+    res.redirect("/");
   } else {
     User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (error, user) {
       if (error) {
@@ -240,11 +244,15 @@ router.post('/reset/:token', function (req,res) {
       } else {
         if (req.body.password === req.body.confirm) {
           var hashedpass = bcrypt.hashSync(req.body.password, 10);
-          user.update({$set:{
+          User.FindOneAndupdate({_id: user._id}, {$set:{
             password: hashedpass,
             resetPasswordToken: undefined,
             resetPasswordExpires: undefined
-          }}, function (error, user) {
+          }}, {new: true}, function (error, user) {
+            if (error) {
+              req.flash("error_msg", "une erreur s'est produite");
+              res.redirect("/");
+            }
             req.login(user, function (err) {
               var mailOptions = {
                 to: user.email,
@@ -269,6 +277,32 @@ router.post('/reset/:token', function (req,res) {
   }
 });
 
+// reset password
+router.get("/reset", checkAuth, function (req, res) {
+  res.render("reset");
+});
+
+router.post("/reset", checkAuth, function (req, res) {
+  var hashedpass = bcrypt.hashSync(req.body.password, 10);
+  var oldHashed = bcrypt.hashSync(req.body.password, 10);
+  var confirmHashed = bcrypt.hashSync(req.body.password, 10);
+  User.findOneAndUpdate({_id: req.user._id, password: oldHashed}, {$set: {password: hashedpass} }, {new: true}, function (error, user) {
+    if (error) {
+      req.flash("error_msg", "une erreur s'est produite");
+      res.redirect("back");
+    } else if (!user) {
+      req.flash("error_msg", "verifiez le mot de passe");
+      res.redirect("back");
+    } else {
+      req.login(user, function (error) {
+        if (error) console.log(error);
+      });
+      req.flash("success_msg", "mot de passe modifié correctement");
+      res.redirect("/user/profile");
+    }
+  })
+});
+
 // Email and functions
 
 // Transporter
@@ -276,7 +310,7 @@ var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'easytraveltechera@gmail.com',
-    pass: 'password'
+    pass: 'tnt23793213'
   }
 });
 

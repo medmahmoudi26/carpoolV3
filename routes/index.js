@@ -49,6 +49,11 @@ router.get("/aller&retour", checkAuth, function (req, res) {
   res.render("propBoth1", {user: req.user});
 });
 
+// route for errors
+router.get("/error", function (req, res) {
+  res.render("error");
+});
+
 // POST REQUESTS
 
 // look for path
@@ -633,7 +638,7 @@ var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'easytraveltechera@gmail.com',
-    pass: '20104957'
+    pass: 'tnt23793213'
   }
 });
 

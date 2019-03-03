@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Reset password</title>
+  </head>
+  <body>
+    <form class="" action="/user/reset/<%= token %>" method="post">
+      <input type="password" name="password" placeholder="mot de passe"> <br>
+      <input type="password" name="confirm" placeholder="confirmer le mot de passe">
+      <input type="submit" name="submit" value="Changer">
+    </form>
+  </body>
+</html>
