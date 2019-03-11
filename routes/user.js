@@ -25,53 +25,11 @@ router.get("/", checkAuth, function (req,res) {
   res.redirect("/user/profile");
 });
 
-//login
-router.get('/login', function(req,res){
-  if(!req.isAuthenticated()){
-    res.render('login');
-  } else {
-    res.redirect('profile');
-  }
-});
-
-//register
-router.get('/register', function(req,res){
-  if (req.isAutheticated()){
-    res.redirect('profile');
-  } else {
-    res.render('register');
-  }
-});
-
 //show my profile
 router.get('/profile', checkAuth, function (req,res) {
   reserver.find({proposerid: req.user._id}, function (error,reservation) {
     if (error) res.render('error', {error: error});
     else if (reservation) res.render('profile', {user:req.user, reservations:reservation});
-  });
-});
-
-// password forget (user enters email)
-router.get('/forgot', function (req,res) {
-  if (req.user) {
-    req.flash("error_msg", "vous etes déja connecter");
-    res.redirect("/user/profile");
-  }
-  else res.render("forgot");
-});
-
-// password reset link
-router.get('/reset/:token', function (req,res) {
-  User.findOne({resetPasswordToken: req.params.token, resetPasswordExpires: {$gt: Date.now() } }, function (error, user) {
-    if (error) {
-      req.flash("error_msg", "une erreur s'est survenue");
-      res.redirect("/");
-    } else if (!user) {
-      req.flash("error_msg", "cet token n'existe pas ou est exipiré");
-      res.redirect("/")
-    } else {
-      res.render("reset", {token: req.params.token});
-    }
   });
 });
 
@@ -98,7 +56,15 @@ router.get('/mesreservations', checkAuth, function (req,res) {
   });
 });
 
-// Login
+//login
+router.get('/login', function(req,res){
+  if(!req.isAuthenticated()){
+    res.render('login');
+  } else {
+    res.redirect('profile');
+  }
+});
+
 router.post('/login', function (req,res, next) {
   passport.authenticate('local', {
     successRedirect: '/user/profile',
@@ -108,6 +74,14 @@ router.post('/login', function (req,res, next) {
 });
 
 //register
+router.get('/register', function(req,res){
+  if (req.isAutheticated()){
+    res.redirect('profile');
+  } else {
+    res.render('register');
+  }
+});
+
 router.post('/register', function(req,res){
   User.findOne({email: req.body.email}, function (err, exist) {
     if (err) console.log(err);
@@ -155,9 +129,12 @@ router.post('/register', function(req,res){
 });
 
 //update profile
-router.post('/update', function (req,res) {
-  if (!req.session.aller1) res.redirect("notlogged");
-  if (req.body.submit){
+router.post('/update', function (req, res) {
+  if (!req.isAuthenticated()) {
+    req.flash("error_msg", "vous n'etes pas connecter");
+    res.redirect("/");
+  }
+  if (req.body.submit) {
     var hashedpass = bcrypt.hashSync(req.body.password, 10)
     User.findOneAndUpdate({_id: req.user._id},{$set:{
       nom        : req.body.nom,
@@ -183,9 +160,17 @@ router.post('/update', function (req,res) {
   }
 });
 
-// receiving password
+// password forget (user enters email)
+router.get('/forgot', function (req,res) {
+  if (req.user) {
+    req.flash("error_msg", "vous etes déja connecter");
+    res.redirect("/user/profile");
+  }
+  else res.render("forgot");
+});
+
 router.post("/forgot", function (req,res) {
-  if (req.isAutheticated) {
+  if (req.isAutheticated()) {
     req.flash("error_msg", "vous etes déja connecté");
     res.redirect("/");
   } else {
@@ -228,7 +213,21 @@ router.post("/forgot", function (req,res) {
   }
 });
 
-// reset password
+// password reset link
+router.get('/reset/:token', function (req,res) {
+  User.findOne({resetPasswordToken: req.params.token, resetPasswordExpires: {$gt: Date.now() } }, function (error, user) {
+    if (error) {
+      req.flash("error_msg", "une erreur s'est survenue");
+      res.redirect("/");
+    } else if (!user) {
+      req.flash("error_msg", "cet token n'existe pas ou est exipiré");
+      res.redirect("/")
+    } else {
+      res.render("reset", {token: req.params.token});
+    }
+  });
+});
+
 router.post('/reset/:token', function (req,res) {
   if (req.isAuthenticated()) {
     req.flash("error_msg", "vous etes déja connecté");
