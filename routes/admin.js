@@ -19,6 +19,7 @@ var cars     = require('../models/cars');
 
 // checking auth
 const { checkAuth } = require('../middleware/check-auth');
+const { checkAdmin } = require('../middleware/check-admin');
 
 // ===== Routes =====
 
@@ -26,17 +27,6 @@ const { checkAuth } = require('../middleware/check-auth');
 router.get("/addcar", function (req, res, next) {
   res.render("addcar");
 });
-
-function requrieAdmin(req, res) {
-  return function (req, res, next) {
-    if (req.user.admin) {
-      next()
-    } else {
-      req.flash("error_msg", "Admin required");
-      res.redirect("/user/profile");
-    }
-  }
-}
 
 // exporting
 module.exports = router;
