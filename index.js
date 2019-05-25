@@ -13,7 +13,7 @@ const flash = require('connect-flash');
 // declare app variable server and connect to database
 app = express();
 var server = require('http').createServer(app);
-var db = mongoose.connect('mongodb://localhost:27017/coVoiture'); // mongodb://user661:6KLXjWlQA5SNNiyy@mongo834:27017/admin
+var db = mongoose.connect('mongodb+srv://med123:med123@cluster0-fooud.mongodb.net/test?retryWrites=true'); // mongodb://user661:6KLXjWlQA5SNNiyy@mongo834:27017/admin
 
 // passport config
 require('./middleware/passport')(passport);
@@ -49,11 +49,13 @@ app.use(session({
 }));
 
 // routes
-var userRoutes  = require("./routes/user.js")
-var indexRoutes = require("./routes/index.js")
+var userRoutes  = require("./routes/user.js");
+var indexRoutes = require("./routes/index.js");
+var adminRoutes = require("./routes/admin.js");
 
-app.use("/user", userRoutes)
-app.use("/", indexRoutes)
+app.use("/user", userRoutes);
+app.use("/", indexRoutes);
+app.use("/admin", adminRoutes);
 
 //listen
 console.log("listening on port 80");

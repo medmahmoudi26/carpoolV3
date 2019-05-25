@@ -13,7 +13,7 @@ var trajetSchema = new Schema ({
   allezDate   : {type: String, required: true}, // date yyyy-mm-dd string format for output
   allezTime   : {type: String, required: true}, // time in 00:00 string format for output
   places      : {type: Number, required: false, default:4},
-  car         : {type: String, required: true}, //moyenne de transport
+  car         : {type: String, required: true}, // id of car
   description : {type: String}
 });
 

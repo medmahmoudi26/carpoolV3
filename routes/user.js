@@ -21,8 +21,8 @@ var trajet    = require('../models/trajet');
 // express router
 var router = express.Router()
 
-router.get("/", checkAuth, function (req,res) {
-  res.redirect("/user/profile");
+router.get('/', checkAuth, function (req,res) {
+  res.redirect('/user/profile');
 });
 
 //show my profile

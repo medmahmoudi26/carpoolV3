@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Admin login</title>
+  </head>
+  <body>
+    <h1>Login</h1>
+    <form action="/admin/login" method="post">
+        <input type="text" name="email" placeholder="email">
+        <input type="password" name="password" placeholder="password">
+        <input type="submit" name="submit">
+    </form>
+    <% include ./partials/messages.ejs %>
+  </body>
+</html>
