@@ -90,7 +90,7 @@ router.post('/chercher', function(req,res){
 
 //proposer aller step 1
 router.post("/aller1", checkAuth, function (req,res) {
-  if (!req.body.allerDate && !req.body.finDate && req.body.allezTime && req.body.finTime && req.body.etab) res.render("error", {error: "une erreure s'est produite"})
+  if (!req.body.allerDate || !req.body.finDate || !req.body.etab) res.render("error", {error: "une erreure s'est produite"})
   req.body.allezDate = new Date(req.body.allezDate + " UTC"); //convert to date-only object the allez et fin date
   req.body.finDate   = new Date(req.body.finDate + " UTC");
   var etab           = req.body.etab // etablissement
@@ -118,7 +118,7 @@ router.post("/aller1", checkAuth, function (req,res) {
     if (cars) {
       req.session.aller1 = req.body; // the body request will be in session to be needed in step 2
       console.log(req.body);
-      res.render("allerProp2", {user:req.user, aller1: req.body, cars:cars });
+      res.render("allerProp2", {user:req.user, recap:req.body, cars:cars });
     }
   });
 });
@@ -293,7 +293,7 @@ router.post("/aller2", checkAuth, function (req,res) {
 
 //proposer aller&retour step 1
 router.post("/aller&retour1", checkAuth, function (req,res) {
-  if (!req.body.allerDate && !req.body.finDate && req.body.allezTime && req.body.finTime && req.body.etab) res.render("error", {error: "une erreure s'est produite"})
+  if (!req.body.allerDate || !req.body.finDate || !req.body.etab) res.render("error", {error: "une erreure s'est produite"})
   req.body.allezDate = new Date(req.body.allezDate+" UTC"); //convert to date-only object the allez et fin date
   req.body.finDate   = new Date(req.body.finDate+" UTC");
   var etab           = req.body.etab // etablissement
@@ -324,7 +324,7 @@ router.post("/aller&retour1", checkAuth, function (req,res) {
       if (cars) {
         req.session.aller1 = req.body; // the body request will be in session to be needed in step 2
         console.log(req.body);
-        res.render("propBoth2", {user:req.user, aller1: req.body, cars:cars });
+        res.render("propBoth2", {user:req.user, recap:req.body, cars:cars });
       }
     });
   }

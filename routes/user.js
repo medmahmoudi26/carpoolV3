@@ -75,7 +75,7 @@ router.post('/login', function (req,res, next) {
 
 //register
 router.get('/register', function(req,res){
-  if (req.isAutheticated()){
+  if (req.isAuthenticated()){
     res.redirect('profile');
   } else {
     res.render('register');
@@ -170,9 +170,9 @@ router.get('/forgot', function (req,res) {
 });
 
 router.post("/forgot", function (req,res) {
-  if (req.isAutheticated()) {
+  if (req.isAuthenticated()) {
     req.flash("error_msg", "vous etes déja connecté");
-    res.redirect("/");
+    res.redirect("/user/profile");
   } else {
     User.findOne({email: req.body.email}, function (err, user) {
       if (err) {
@@ -231,7 +231,7 @@ router.get('/reset/:token', function (req,res) {
 router.post('/reset/:token', function (req,res) {
   if (req.isAuthenticated()) {
     req.flash("error_msg", "vous etes déja connecté");
-    res.redirect("/");
+    res.redirect("/user/profile");
   } else {
     User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (error, user) {
       if (error) {
@@ -243,7 +243,7 @@ router.post('/reset/:token', function (req,res) {
       } else {
         if (req.body.password === req.body.confirm) {
           var hashedpass = bcrypt.hashSync(req.body.password, 10);
-          User.FindOneAndupdate({_id: user._id}, {$set:{
+          User.findOneAndUpdate({_id: user._id}, {$set:{
             password: hashedpass,
             resetPasswordToken: undefined,
             resetPasswordExpires: undefined
@@ -282,26 +282,27 @@ router.get("/reset", checkAuth, function (req, res) {
 });
 
 router.post("/reset", checkAuth, function (req, res) {
+  var oldHashed = bcrypt.hashSync(req.body.oldPassword, 10);
   var hashedpass = bcrypt.hashSync(req.body.password, 10);
-  var oldHashed = bcrypt.hashSync(req.body.password, 10);
   var confirmHashed = bcrypt.hashSync(req.body.password, 10);
-  User.findOneAndUpdate({_id: req.user._id, password: oldHashed}, {$set: {password: hashedpass} }, {new: true}, function (error, user) {
+  User.findOne({_id: req.user._id}, function (error, user) {
     if (error) {
       req.flash("error_msg", "une erreur s'est produite");
       res.redirect("back");
-    } else if (!user) {
-      req.flash("error_msg", "verifiez le mot de passe");
-      res.redirect("back");
-    } else {
-      req.login(user, function (error) {
-        if (error) console.log(error);
+    } else if (bcrypt.compareSync(req.body.oldPassword, user.password) && req.body.password == req.body.confirm) {
+      user.update({$set: {password: hashedpass}}, {new: true}, function (error, user) {
+        req.login(user, function (err) {
+          if (err) console.log(err);
+        });
+        req.flash("success_msg", "mot de passe modifié correctement");
+        res.redirect("/user/profile");
       });
-      req.flash("success_msg", "mot de passe modifié correctement");
-      res.redirect("/user/profile");
+    } else {
+      req.flash("error_msg", "verifiez vos coordonnés");
+      res.redirect("back");
     }
-  })
+  });
 });
-
 // Email and functions
 
 // Transporter

@@ -5,7 +5,9 @@
     <title>Reset password</title>
   </head>
   <body>
-    <form class="" action="/user/reset<% if (token != '') {%>/<%= token %><% } %>" method="post">
+    <% include ./partials/messages.ejs %>
+    <form class="" action="/user/reset<% if (typeof token != 'undefined') {%>/<%= token %><% } %>" method="post">
+      <% if (typeof token == 'undefined') {%> <input type="password" name="oldPassword" placeholder="mot de passe ancien"> <br> <% } %>
       <input type="password" name="password" placeholder="mot de passe"> <br>
       <input type="password" name="confirm" placeholder="confirmer le mot de passe">
       <input type="submit" name="submit" value="Changer">

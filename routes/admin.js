@@ -32,7 +32,7 @@ router.get("/", checkAdmin, function (req, res) {
 
 // dashboard
 router.get("/dashboard", checkAdmin, function (req, res) {
-  res.render("admin", {admin: req.session});
+  res.render("admin", {admin: req.user});
 });
 
 // login
@@ -54,6 +54,33 @@ router.post("/login", function (req, res, next) {
 // add a car
 router.get("/addcar", checkAdmin, function (req, res) {
   res.render("addcar");
+});
+
+router.post("/addcar", checkAdmin, function (req,res) {
+    cars.create({
+      mat:            req.body.mat,
+      model:          req.body.model,
+      places:         req.body.places,
+      etablissement:  req.body.etablissement,
+      remarque:       req.body.remarque
+  },function (error, suc1) {
+    if (error) res.render("error", {error: error});
+    if (suc1) {
+      console.log(suc1);
+      cardispo.create({
+        brand_new : true,
+        car       : suc1.mat,
+        etab      : suc1.etablissement,
+        places    : suc1.places
+      }, function (error, suc2) {
+        if (error) res.render("error", {error: error});
+        else if(suc2) {
+          console.log(suc2);
+          res.render("error", {error: "Success"});
+        }
+      });
+    }
+  });
 });
 
 // exporting

@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -84,6 +83,12 @@
       <div class="container" >
             <form style=" padding-left:25%;padding-right:25%;padding-top:5%;padding-bottom: 5%;" action="/aller2" method="post">
               <h3 class="text-center font-weight-normal"style="color:#112D4E;"> Suggest a trip <h3>
+                Départ: <%= recap.depart %><br>
+                Etape:  <%= recap.etape %><br>
+                Destination: <%= recap.dest %><br>
+                Date de départ: <%= recap.allezDate %><br>
+                Date de retourner la voiture: <%= recap.finDate %><br>
+                Etablissement: <%= recap.etab %>
                 <% if (cars != "") { %>
                 <div style="margin-top:20%;margin-bottom:20%;">
                   <div class="form-group">

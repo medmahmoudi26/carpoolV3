@@ -11,7 +11,7 @@ module.exports = function (passport) {
       // Match user
       User.findOne({email: email}, function (err, user) {
         if (err) {
-          console.log(err);
+          return done(null, false, {message: err});
         } else if (!user) {
           return done(null, false, {message: "Cet email n'existe pas"});
         } else {
