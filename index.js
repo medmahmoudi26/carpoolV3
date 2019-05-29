@@ -169,7 +169,25 @@ io.sockets.on('connection', function(socket){
         }}
       });
     });
+    socket.on("update", function (car) {
+      var id = car.id;
+      var mat = car.mat;
+      var model = car.model;
+      console.log("Updating car");
+      cars.findOneAndUpdate({_id: id},{$set:{mat:mat, model:model}}, {new: true}, function (error, updated) {
+        if (error) socket.emit("error", error);
+        else socket.emit('updated', updated._id)
+      });
+    });
+    socket.on("delete", function (id) {
+      cars.findOneAndDelete({_id: id}, function (error, deleted) {
+        if (error) socket.emit("error", error);
+        else socket.emit("deleted", deleted._id);
+      });
+    });
   });
+
+
 
 // add 0 to time number
 function addzero(num) {

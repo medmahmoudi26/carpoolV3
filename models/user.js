@@ -12,7 +12,8 @@ var UserSchema = new Schema ({
   bestdepart    : {type: String}, // best depart
   bestdest      : {type: String},  // best destination
   resetPasswordToken   : String,
-  resetPasswordExpires : Date
+  resetPasswordExpires : Date,
+  isAdmin:        Boolean
 });
 
 module.exports = mongoose.model('user',UserSchema);

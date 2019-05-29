@@ -5,6 +5,44 @@
     <title>Page admin</title>
   </head>
   <body>
-    <% admin.prenom %> <% admin.nom %>
+    <%= admin.prenom %> <%= admin.nom %><br>
+    <% include ./partials/messages.ejs %><br>
+    <a href="/admin/addcar">Ajouter véhicule</a><br><br>
+
+    <% cars.forEach(function (car) { %>
+      <div id="<%= car._id %>">
+      <input type="text" id="mat-<%= car._id %>" value=<%=car.mat%>>
+      <input type="text" id="model-<%= car._id %>" value=<%=car.model%>>
+      <button type="button" name="del" onclick="del('<%= car._id %>');">Delete</button>
+      <button type="button" name="update" onclick="update('<%= car._id %>')">Update</button>
+      <div id="updated-<%= car._id %>">
+      </div>
+    </div>
+    <% }) %>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io.connect("http://localhost:80");
+      function update(id) {
+        var mat = document.getElementById('mat-'+id).value;
+        var model = document.getElementById('model-'+id).value;
+        console.log('emitting');
+        socket.emit('update', {id: id, mat: mat, model: model});
+      }
+      function del(id) {
+        socket.emit('delete', id);
+      }
+      socket.on('updated', function(id){
+        var space = document.getElementById("updated-"+id)
+  			space.innerHTML = '<b>updated</b>'
+      });
+      socket.on('error', function(error) {
+        alert(error);
+      });
+      socket.on('deleted', function (id) {
+        var space = document.getElementById(id)
+        space.parentNode.removeChild(space);
+      });
+    </script>
   </body>
 </html>
