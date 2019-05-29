@@ -19,7 +19,18 @@
       </div>
     </div>
     <% }) %>
-
+    <% trajets.forEach(function(trajet) { %>
+      Nom: <%= trajet.nom %><br>
+      Prenom: <%= trajet.prenom %><br>
+      Départ: <%= trajet.depart %><br>
+      Etape: <%= trajet.etape %><br>
+      Destination: <%= trajet.dest %><br>
+      Date d'aller: <%= trajet.allezDate %><br>
+      Temps d'aller: <%= trajet.allezTime %><br>
+      Places: <%= trajet.places %><br>
+      Véhicule: <%= trajet.car %><br>
+      Description: <%= trajet.description %>
+    <% }) %>
     <script src="/socket.io/socket.io.js"></script>
     <script>
       var socket = io.connect("http://localhost:80");
