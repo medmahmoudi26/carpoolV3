@@ -7,7 +7,7 @@
   <link rel="icon" type="image/png" href="../assets/img/.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    proposer
+    Login
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -21,149 +21,97 @@
 
 </head>
 
-<body class="index-page sidebar-collapse" style="background-image: url('../assets/img/r1.jpg');background-color:#F9F7F7;background-repeat:no-repeat; background-size: cover;">
-  <section class="bodyy bodyy3">
-    <nav class="navbar  bg-white    fixed-top  navbar-expand-lg  height" color-on-scroll="100" id="sectionsNav">
-      <div class="container">
-        <div class="navbar-translate">
-          <a class="navbar-brand font-weight-bold" href="/"style="color:#112D4E;font-size:20px;">
-            <img src="" style="
-width: 80px;
-margin-bottom: 30px;
-"> </a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="navbar-toggler-icon" ></span>
-            <span class="navbar-toggler-icon"></span>
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        </div>
-
-        <div class="collapse navbar-collapse">
-          <ul class="navbar-nav ml-auto">
-
-
-            <li class="dropdown nav-item">
-              <a href="/" class=" nav-link"style="color:#112D4E;font-size:15px;">
-                Accueil
-              </a>
-            </li>
-            <li class="dropdown nav-item">
-                <button style="color:white;background-color:#3F72AF;"type="button" onclick="location.href='/proposer'" class="btn nav-link">Proposer un trajet</button>
-
-            </li>
-            <li class="dropdown nav-item">
-              <a href="/login" class="dropdown-toggle nav-link" data-toggle="dropdown">
-               <%= user.prenom %>
-              </a>
-              <div class="dropdown-menu dropdown-with-icons">
-                <a href="/login" class="dropdown-item">
-                  <i class="material-icons">face</i> Profile
-                </a>
-                <a href="/mestrajets" class="dropdown-item">
-                  <i class="material-icons">directions</i> Trajets
-                </a>
-                <a href="/mesreservations" class="dropdown-item">
-                  <i class="material-icons">check</i> Reservations
-                </a>
-
-              </div>
-            </li>
-            <li class="dropdown nav-item">
-              <a href="/logoff" class=" nav-link"style="color:#112D4E;font-size:15px;">
-                Déconnection
-              </a>
-            </li>
-
-          </ul>
-        </div>
-
-      </div>
-    </nav>
-
-  <section class="choix" style="">
+<body class="index-page sidebar-collapse" style="">
+  <section style="padding-bottom:15%;background-image: url('../assets/img/r1.jpg');background-color:#F9F7F7;background-repeat:no-repeat; background-size: cover;">
+  <nav class="navbar bg-white navbar-expand-lg navbar-transparent " color-on-scroll="100" id="sectionsNav">
     <div class="container">
-    <div class="row">
-
-    <div class="card-body px-lg-5 pt-0">
-      <div style="background-color: white; border-radius:10px;margin-top:;" class="border border-light p-5">
-
-
-        <div class="row">
-          <div class="col col-example">
-            <div class="card card-cascade wider"style="margin-top:20px;width:auto;">
-
-  <!-- Card image -->
-  <div class="view view-cascade overlay">
-
-    <a href="#!">
-      <div class="mask rgba-white-slight"></div>
-    </a>
-  </div>
-
-  <!-- Card content -->
-  <div class="card-body card-body-cascade text-center">
-
-    <!-- Title -->
-    <h3 class="text-center font-weight-normal"style="color:#112D4E;"> Aller & Retour <h3>
-
-    <!-- Subtitle -->
-    <!-- Text -->
-    <p class="card-text">Vous faites un aller retour ? , economiser du temps et proposer vos trajets rapidement </p>
-
-    <!-- Linkedin -->
-    <button style="  border-radius:5px;background-color: #3F72AF;"class="btn "type="button" onclick="location.href='/aller&retour'"><i class="fa fa-chevron-circle-right fa-2x" aria-hidden="true"></i> </button>
-
-  </div>
-
-</div>
-</div>
-          <div class="col col-example">
-            <div class="card card-cascade wider"style="margin-top:20px;width:auto;">
-
-        <!-- Card image -->
-        <div class="view view-cascade overlay">
-
-        <a href="#!">
-        <div class="mask rgba-white-slight"></div>
-        </a>
-        </div>
-
-        <!-- Card content -->
-        <div class="card-body card-body-cascade text-center">
-
-        <!-- Title -->
-        <h3 class="text-center font-weight-normal"style="color:#112D4E;"> Aller Simple <h3>
-
-        <!-- Subtitle -->
-
-        <!-- Text -->
-        <p class="card-text">Vous faites un trajet simple , proposez votre votre voyage a vos collègues en quelques cliques </p>
-        <button style="  border-radius:5px;background-color: #3F72AF;"class="btn " type="button" onclick="location.href='/aller'"><i class="fa fa-chevron-circle-right fa-2x" aria-hidden="true"></i> </button>
-
-
-        </div>
-
-        </div>
-          </div>
-        </div>
+      <div class="navbar-translate">
+        <a class="navbar-brand font-weight-bold" href="/"style="color:#112D4E;font-size:20px;">
+          Travel easy </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="navbar-toggler-icon" ></span>
+          <span class="navbar-toggler-icon"></span>
+          <span class="navbar-toggler-icon"></span>
+        </button>
       </div>
 
-      </div>
-      <div class="col-md">
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ml-auto">
 
+
+          <li class="dropdown nav-item">
+            <a href="/index" class=" nav-link"style="color:#112D4E;font-size:15px;">
+              Accueil
+            </a>
+          </li>
+          <li class="dropdown nav-item">
+            <a href="/user/register" class=" nav-link"style="color:#112D4E;font-size:15px;">
+              Créer un compte
+            </a>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+  </nav>
+
+  <section style="margin-top:160px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
+          <form class="form" method="post" action="/user/login">
+            <div class="card card-login card-hidden"style="width:auto;">
+              <div class="card-header card-header-primary text-center">
+                <h4 class="card-title">Login</h4>
+                <div class="card-title text-center">
+                <div class="social text-center">
+
+
+                  <h4> </h4>
+                </div>
+              </div>
+              </div>
+              <div class="card-body ">
+
+
+                <span class="bmd-form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="material-icons">email</i>
+                      </span>
+                    </div>
+                    <input type="email" class="form-control" placeholder="Email..." name="email">
+                  </div>
+                </span>
+                <span class="bmd-form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="material-icons">lock_outline</i>
+                      </span>
+                    </div>
+                    <input type="password" class="form-control" placeholder="Password..." name="pass">
+                  </div>
+                </span>
+              </div>
+              <div class="card-footer justify-content-center">
+                <div class="text-center">
+                  <input style="margin-top:40px;margin-bottom:20px;background-color:#3F72AF;"type="submit" class="btn" value="login" name="submit">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 </section>
 </section>
 <footer class="footer footer-white"style="">
   <div class="container">
-    <a class="footer-brand" href="/"><img src="" style="
-width: 80px;
-margin-bottom: 30px;
-"></a>
+    <a class="footer-brand" href="/">Easy Travel</a>
     <ul class="pull-center">
       <li>
         <a href="/">

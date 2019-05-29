@@ -13,20 +13,23 @@
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- CSS Files -->
-  <link href="./assets/css/material-kit.css?v=2.1.1" rel="stylesheet" />
+  <link href="../assets/css/material-kit.css?v=2.1.1" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="./assets/demo/demo.css" rel="stylesheet" />
-  <link href="./assets/demo/vertical-nav.css" rel="stylesheet" />
+  <link href="../assets/demo/demo.css" rel="stylesheet" />
+  <link href="../assets/demo/vertical-nav.css" rel="stylesheet" />
 
 </head>
 
 <body class="index-page sidebar-collapse" style="">
-  <section style="padding-bottom:8%;background-image: url('./assets/img/r1.jpg');background-color:#F9F7F7;background-repeat:no-repeat; background-size: cover;">
-  <nav class="navbar bg-white navbar-expand-lg  " color-on-scroll="100" id="sectionsNav">
+  <section style="padding-bottom:8%;background-image: url('../assets/img/r1.jpg');background-color:#F9F7F7;background-repeat:no-repeat; background-size: cover;">
+  <nav class="navbar bg-white navbar-expand-lg  height" color-on-scroll="100" id="sectionsNav">
     <div class="container">
       <div class="navbar-translate">
         <a class="navbar-brand font-weight-bold" href="/"style="color:#112D4E;font-size:20px;">
-          Easy Travel</a>
+          <img src="" style="
+      width: 80px;
+      margin-bottom: 30px;
+  "></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="sr-only">Toggle navigation</span>
           <span class="navbar-toggler-icon" ></span>
@@ -51,20 +54,20 @@
              <%= user.prenom %>
             </a>
             <div class="dropdown-menu dropdown-with-icons">
-              <a href="/user/profile" class="dropdown-item">
+              <a href="/profile" class="dropdown-item">
                 <i class="material-icons">face</i> Profile
               </a>
-              <a href="/user/mestrajets" class="dropdown-item">
+              <a href="/mestrajets" class="dropdown-item">
                 <i class="material-icons">directions</i> Trajets
               </a>
-              <a href="/user/mesreservations" class="dropdown-item">
+              <a href="/mesreservations" class="dropdown-item">
                 <i class="material-icons">check</i> reservations
               </a>
 
             </div>
           </li>
           <li class="dropdown nav-item">
-            <a href="/user/logoff" class=" nav-link"style="color:#112D4E;font-size:15px;">
+            <a href="/logoff" class=" nav-link"style="color:#112D4E;font-size:15px;">
               Déconnection
             </a>
           </li>
@@ -84,12 +87,12 @@
 
             </li>
             <li class="dropdown nav-item">
-              <a href="/user/login" class=" nav-link"style="color:#112D4E;font-size:15px;">
+              <a href="/login" class=" nav-link"style="color:#112D4E;font-size:15px;">
                  Se connecter
               </a>
             </li>
             <li class="dropdown nav-item">
-              <a href="/user/register" class=" nav-link"style="color:#112D4E;font-size:15px;">
+              <a href="/register" class=" nav-link"style="color:#112D4E;font-size:15px;">
                  Créer un compte
               </a>
             </li>
@@ -101,60 +104,62 @@
     </div>
   </nav>
 
-  <section style="margin-top:100px;">
-    <div class="container">
-      <% include ./partials/messages %>
-      <div class="row">
+  <section class="bodyy bodyy2" style="margin-top:00px;">
+  <div class="container">
+    <div class="row">
 
+      <div class="col-md-auto indexd " style="">
 
-              <div class="col-md-auto  " style="margin-left:0%;margin-right:8%;margin-top:8%;width:30rem;display: inline-block;">
-                <h2 class="font-weight-black " style="color:#112D4E;font-size: 30px;">Voyager, oui mais pas tout seul !</h2>
-                <h2 class="font-weight-bold "style="color:#3F72AF;font-size: 30px;padding-top:20px;">Ensemble on voyage</h2>
-                  <div class="" style="width: 30rem;display: inline-block;color:#8899B9;padding-top:20px;">
-                <p class="font-weight-bold "style="font-size: 12px;width:100%;">Notre outil est conçu pour optimiser les voyages de nos collaborateur au sein de la DEX Occitanie </p>
-                <div style="padding-top:20px;"class="">
-                  <button style="margin-top:30px;margin-bottom:20px;background-color:#3F72AF;"type="button" onclick="location.href='/proposer'" class="btn"><a href"/proposer">Proposer un trajet</a></button>
-              </div>
-              </div>
-
-              </div>
-        <div class="col-lg"style="text-align: right;">
-          <div class="card indexc" style="">
-            <div class="card-body">
-              <form style=" padding-left:60px;padding-right:60px;padding-top:20px;padding-bottom: 00px;" method="post" action="/chercher">
-                <h3 class="text-center font-weight-normal"style="color:#112D4E;"> Chercher un trajet <h3>
-                  <div style="padding-top:20px;">
-      <div class="form-group"style="">
-        <label for="exampleFormControlInput1">Départ</label>
-        <input type="text" class="form-control" id="departure" name="depart" required>
-      </div>
-        </div>
-      <div style="padding-top:20px;">
-      <div class="form-group">
-        <label for="exampleFormControlInput1">Arrivée</label>
-        <input type="text" class="form-control" id="arrival" name="dest" required>
+        <h2 class="font-weight-black t1" style="">Voyager, oui mais pas tout seul !</h2>
+        <h2 class="font-weight-bold t2 "style="">Ensemble on voyage</h2>
+          <div class="divp" style="width: ;display: inline-block;color:#8899B9;padding-top:20px;">
+        <p class="font-weight-bold indexp p1 "style="">Notre outil est conçu pour optimiser les voyages de nos collaborateurs au sein de la DEX Occitanie </p>
+        <div .class="indexb">
+          <button style="margin-top:30px;margin-bottom:20px;background-color:#3F72AF;"type="button" onclick="location.href='/proposer'" class="btn"><a href"/proposer">Proposer un trajet</a></button>
       </div>
       </div>
-        <div style="padding-top:20px;">
-      <div class="form-group">
-        <label for="exampleFormControlInput1">Date</label>
-        <input type="text" class="form-control datetimepicker" id='datetimepicker' name="date" required >
-      </div>
-        </div>
-      <div class="text-center">
-        <button style="margin-top:40px;margin-bottom:20px;background-color:#3F72AF;"type="submit" class="btn">Chercher</button>
-      </div>
-    </form>
-            </div>
-          </div>      </div>
 
       </div>
+      <div class="col-lg"style="text-align: right;">
+        <div class="cardd indexc" style="">
+          <div class="cardd-body">
+             <form class="form1"method="post" action="/chercher">
+               <h3 class="form-title"style="color:#112D4E;"> Chercher un trajet <h3>
+                <div >
+                  <div class="separation">
+                    <label class="label" for="exampleFormControlInput1">Départ</label>
+      <input type="text" class="form-input" id="departure" name="depart" required>
     </div>
+      </div>
+    <div .>
+    <div class="form-group">
+      <label class="label" for="exampleFormControlInput1">Arrivée</label>
+      <input type="text" class="form-input" id="arrival" name="dest" required>
+    </div>
+    </div>
+      <div .>
+    <div class="form-group">
+      <label class="label" for="exampleFormControlInput1">Date</label>
+      <input type="text" class="form-input datetimepicker" id='datetimepicker' name="date" required >
+    </div>
+      </div>
+      <div class="text-center">
+        <button class="batn"type="submit" class="btn">chercher</button>
+      </div>
+  </form>
+          </div>
+        </div>      </div>
+
+    </div>
+  </div>
 </section>
 </section>
 <footer class="footer footer-white"style="">
   <div class="container">
-    <a class="footer-brand" href="/">Easy Travel</a>
+    <a class="footer-brand" href="/"><img src="" style="
+width: 80px;
+margin-bottom: 30px;
+"></a>
     <ul class="pull-center">
       <li>
         <a href="/">
@@ -331,33 +336,33 @@ autocomplete(document.getElementById("arrival"), countries);
          });
      </script>
 
-       <script src="./assets/js/core/jquery.min.js" type="text/javascript"></script>
-       <script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
-       <script src="./assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
-       <script src="./assets/js/plugins/moment.min.js"></script>
+       <script src="../assets/js/core/jquery.min.js" type="text/javascript"></script>
+       <script src="../assets/js/core/popper.min.js" type="text/javascript"></script>
+       <script src="../assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+       <script src="../assets/js/plugins/moment.min.js"></script>
        <!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
-       <script src="./assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
+       <script src="../assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
        <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-       <script src="./assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
+       <script src="../assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
        <!--  Google Maps Plugin    -->
        <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
        <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
-       <script src="./assets/js/plugins/bootstrap-tagsinput.js"></script>
+       <script src="../assets/js/plugins/bootstrap-tagsinput.js"></script>
        <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
-       <script src="./assets/js/plugins/bootstrap-selectpicker.js" type="text/javascript"></script>
+       <script src="../assets/js/plugins/bootstrap-selectpicker.js" type="text/javascript"></script>
        <!--	Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
-       <script src="./assets/js/plugins/jasny-bootstrap.min.js" type="text/javascript"></script>
+       <script src="../assets/js/plugins/jasny-bootstrap.min.js" type="text/javascript"></script>
        <!--	Plugin for Small Gallery in Product Page -->
-       <script src="./assets/js/plugins/jquery.flexisel.js" type="text/javascript"></script>
+       <script src="../assets/js/plugins/jquery.flexisel.js" type="text/javascript"></script>
        <!-- Plugins for presentation and navigation  -->
-       <script src="./assets/demo/modernizr.js" type="text/javascript"></script>
-       <script src="./assets/demo/vertical-nav.js" type="text/javascript"></script>
+       <script src="../assets/demo/modernizr.js" type="text/javascript"></script>
+       <script src="../assets/demo/vertical-nav.js" type="text/javascript"></script>
        <!-- Place this tag in your head or just before your close body tag. -->
        <script async defer src="https://buttons.github.io/buttons.js"></script>
        <!-- Js With initialisations For Demo Purpose, Don't Include it in Your Project -->
-       <script src="./assets/demo/demo.js" type="text/javascript"></script>
+       <script src="../assets/demo/demo.js" type="text/javascript"></script>
        <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
-       <script src="./assets/js/material-kit.js?v=2.1.1" type="text/javascript"></script>
+       <script src="../assets/js/material-kit.js?v=2.1.1" type="text/javascript"></script>
        <script>
          $(document).ready(function() {
            //init DateTimePickers
