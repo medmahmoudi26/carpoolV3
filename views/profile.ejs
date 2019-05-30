@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -20,13 +21,18 @@
   <link href="../assets/demo/vertical-nav.css" rel="stylesheet" />
 </head>
 
-<body class="profile-page sidebar-collapse">
+<body class="profile-page sidebar-collapse" style="background-image: url('../assets/img/r1.jpg'); background-repeat: no-repeat;
+  background-size: cover;" >
+  <section class="bodyy" >
 
-  <nav class="navbar      fixed-top  navbar-expand-lg  " color-on-scroll="100" id="sectionsNav">
+  <nav class="navbar   bg-white   fixed-top  navbar-expand-lg  height" color-on-scroll="100" id="sectionsNav">
     <div class="container">
       <div class="navbar-translate">
         <a class="navbar-brand font-weight-bold" href="/"style="color:#112D4E;font-size:20px;">
-          Easy travel </a>
+          <img src="" style="
+width: 80px;
+margin-bottom: 30px;
+"> </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="sr-only">Toggle navigation</span>
           <span class="navbar-toggler-icon" ></span>
@@ -49,24 +55,24 @@
 
           </li>
           <li class="dropdown nav-item">
-            <a href="/user/login" class="dropdown-toggle nav-link" data-toggle="dropdown">
+            <a href="/login" class="dropdown-toggle nav-link" data-toggle="dropdown">
              <%= user.prenom %>
             </a>
             <div class="dropdown-menu dropdown-with-icons">
-              <a href="/user/login" class="dropdown-item">
+              <a href="/login" class="dropdown-item">
                 <i class="material-icons">face</i> Profile
               </a>
-              <a href="/user/mestrajets" class="dropdown-item">
+              <a href="/mestrajets" class="dropdown-item">
                 <i class="material-icons">directions</i> Trajets
               </a>
-              <a href="/user/mesreservations" class="dropdown-item">
+              <a href="/mesreservations" class="dropdown-item">
                 <i class="material-icons">check</i> Reservations
               </a>
 
             </div>
           </li>
           <li class="dropdown nav-item">
-            <a href="/user/logoff" class=" nav-link"style="color:#112D4E;font-size:15px;">
+            <a href="/logoff" class=" nav-link"style="color:#112D4E;font-size:15px;">
               Déconnection
             </a>
           </li>
@@ -76,23 +82,17 @@
 
     </div>
   </nav>
-  <div class="page-header header-filter" data-parallax="true" style="background-image: url('../assets/img/r1.jpg');"></div>
-  <div class="main main-raised">
-    <div class="profile-content">
-      <div class="container">
+
+    <div class="main "style="margin-left:50px;margin-right:50px;border-radius:0px;">
+      <div class="profile-content">
+        <div class="container">
         <div class="row">
 
           <div class="col-md-6 ml-auto mr-auto">
-            <div class="profile">
-              <div class="avatar">
-                <img src="../assets/img/faces/christian.jpg" alt="Circle Image" class="img-raised rounded-circle img-fluid">
-              </div>
-
-              <div class="name">
-                <h3 class="title"><%= user.prenom %> <%= user.nom %></strong>
+            <div class="name" style="text-align:center;margin-top:60px;">
+              <h2 class="title"><strong>Bienvenue <%= user.prenom %> <%= user.nom %></strong></h2>
 
 
-              </div>
             </div>
             <div class="profile-tabs">
               <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
@@ -101,7 +101,7 @@
                     <i class="material-icons"onclick="location.href='/mestrajets'">directions</i> mes trajets
                   </a>
                 </li>
-                <a  onclick="location.href='/user/mesreservations'"><li class="nav-item">
+                <a  onclick="location.href='mesreservations.html'"><li class="nav-item">
                   <a class="nav-link active" href="" role="tab" data-toggle="tab">
                     <i class="material-icons" onclick="location.href='/mesreservations'">check</i> mes reservations
                   </a>
@@ -120,7 +120,7 @@
               <div class="row">
 
                 <div class="col-md-5 ml-auto">
-                  <% include ./partials/messages %>
+
                   <form class="form" autocomplete="off" action="/update" method="post">
                     <div class="form-group">
                       <div class="input-group">
@@ -211,8 +211,6 @@
                         <input type="text" class="form-control autocomplete"id="land" value="<%= user.bestdest %>"  name="bestdest">
                       </div>
                     </div>
-                    <a href="/user/reset">Reset password</a>
-
                 </div>
               </div>
             </div>
@@ -240,7 +238,7 @@
          <div class="card-body">
 
             <h3 style="padding:20px;"><a  style="color:#3f72af" href="/detail/<%= res.reserverid %>"><%= res.reservername %></a> s'est intéressé de votre trajet</h3>
-           <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">DE:</strong><%= res.depart %><br><strong style="margin-right:10px;margin-left:00px;">VERS:</strong> <%= res.destination %></h4>
+           <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">DE:</strong><%= res.depart %><strong style="margin-right:10px;margin-left:30px;">VERS:</strong> <%= res.destination %></h4>
                <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">LE:</strong>  <%= res.date %></h4>
 
 
@@ -252,7 +250,7 @@
 
 
 					 <% } else { %>
-						 <h3 class="text-center font-weight-normal"style="color:#112D4E;padding-bottom:50px;padding-top:50px;"> vous avez accepté cette invitations</h3>
+						 <h3 class="text-center font-weight-normal"style="color:#112D4E;padding-bottom:180px;padding-top:100px;"> vous avez accepté cette invitations</h3>
 						 <% }; %>
      </div>
      </div>
@@ -266,55 +264,59 @@
       </div>
       </section>
 
-      <footer class="footer footer-white"style="">
-        <div class="container">
-          <a class="footer-brand" href="/">Easy Travel</a>
-          <ul class="pull-center">
-            <li>
-              <a href="/">
-                Accueil
-              </a>
-            </li>
-            <li>
-              <a href="/">
-                Chercher un trajet
-              </a>
-            </li>
-            <li>
-              <a href="/proposer">
-                Proposer un trajet
-              </a>
-            </li>
 
-            <li>
-              <a href="https://www.linkedin.com/in/marouen-kanoun-627a947b/">
-                Contacter nous
-              </a>
-            </li>
-          </ul>
-          <ul class="social-buttons float-right">
-            <li>
-              <a href="#" target="_blank" class="btn btn-just-icon btn-link btn-twitter">
-                <i class="fa fa-twitter"></i>
-              </a>
-            </li>
-            <li>
-              <a href="#" target="_blank" class="btn btn-just-icon btn-link btn-dribbble">
-                <i class="fa fa-dribbble"></i>
-              </a>
-            </li>
-            <li>
-              <a href="#" target="_blank" class="btn btn-just-icon btn-link btn-google">
-                <i class="fa fa-google-plus"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </footer>
+</section>
+<footer class="footer footer-white"style="">
+  <div class="container">
+    <a class="footer-brand" href="/"><img src="" style="
+width: 80px;
+margin-bottom: 30px;
+"></a>
+    <ul class="pull-center">
+      <li>
+        <a href="/">
+          Accueil
+        </a>
+      </li>
+      <li>
+        <a href="/">
+          Chercher un trajet
+        </a>
+      </li>
+      <li>
+        <a href="/proposer">
+          Proposer un trajet
+        </a>
+      </li>
 
+      <li>
+        <a href="https://www.linkedin.com/in/marouen-kanoun-627a947b/">
+          Contacter nous
+        </a>
+      </li>
+    </ul>
+    <ul class="social-buttons float-right">
+      <li>
+        <a href="#" target="_blank" class="btn btn-just-icon btn-link btn-twitter">
+          <i class="fa fa-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#" target="_blank" class="btn btn-just-icon btn-link btn-dribbble">
+          <i class="fa fa-dribbble"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#" target="_blank" class="btn btn-just-icon btn-link btn-google">
+          <i class="fa fa-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+</footer>
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    var socket = io.connect('http://localhost:80/');
+    var socket = io.connect('http://http://s2ec2s76f.de-02.live-paas.net/');
     function accepter(reserveid, trajetid) {
       socket.emit('accepter',{reserveid: reserveid, trajetid: trajetid});
     }

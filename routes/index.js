@@ -90,7 +90,11 @@ router.post('/chercher', function(req,res){
 
 //proposer aller step 1
 router.post("/aller1", checkAuth, function (req,res) {
-  if (!req.body.allerDate || !req.body.finDate || !req.body.etab) res.render("error", {error: "une erreure s'est produite"})
+  //if (!req.body.allerDate || !req.body.finDate || !req.body.etab) res.render("error", {error: "check all fields"})
+  console.log(req.body);
+  var recap = req.body;
+  var stringAllerDate = req.body.allezDate;
+  var stringFinDate = req.body.finDate;
   req.body.allezDate = new Date(req.body.allezDate + " UTC"); //convert to date-only object the allez et fin date
   req.body.finDate   = new Date(req.body.finDate + " UTC");
   var etab           = req.body.etab // etablissement
@@ -117,8 +121,7 @@ router.post("/aller1", checkAuth, function (req,res) {
     if (error) res.render("allerProp1", {user: req.user, error:error});
     if (cars) {
       req.session.aller1 = req.body; // the body request will be in session to be needed in step 2
-      console.log(req.body);
-      res.render("allerProp2", {user:req.user, recap:req.body, cars:cars });
+      res.render("allerProp2", {user:req.user, recap:recap, cars:cars, allerDate: stringAllerDate, finDate: stringFinDate});
     }
   });
 });
@@ -293,7 +296,10 @@ router.post("/aller2", checkAuth, function (req,res) {
 
 //proposer aller&retour step 1
 router.post("/aller&retour1", checkAuth, function (req,res) {
-  if (!req.body.allerDate || !req.body.finDate || !req.body.etab) res.render("error", {error: "une erreure s'est produite"})
+  //if (!req.body.allerDate || !req.body.finDate || !req.body.etab) res.render("error", {error: "une erreure s'est produite"})
+  var recap = req.body;
+  var stringAllerDate = req.body.allezDate;
+  var stringFinDate = req.body.finDate;
   req.body.allezDate = new Date(req.body.allezDate+" UTC"); //convert to date-only object the allez et fin date
   req.body.finDate   = new Date(req.body.finDate+" UTC");
   var etab           = req.body.etab // etablissement
@@ -324,7 +330,7 @@ router.post("/aller&retour1", checkAuth, function (req,res) {
       if (cars) {
         req.session.aller1 = req.body; // the body request will be in session to be needed in step 2
         console.log(req.body);
-        res.render("propBoth2", {user:req.user, recap:req.body, cars:cars });
+        res.render("propBoth2", {user:req.user, recap:recap, cars:cars, allerDate: stringAllerDate, finDate: stringFinDate});
       }
     });
   }
