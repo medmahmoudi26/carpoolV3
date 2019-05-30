@@ -87,6 +87,28 @@ margin-bottom: 30px;
       <div class="container" >
             <form style=" padding-left:25%;padding-right:25%;padding-top:5%;padding-bottom: 5%;" action="/aller&retour2" method="post">
               <h3 class="text-center font-weight-normal"style="color:#112D4E;"> Proposer un trajet <h3>
+
+
+
+                <div class="card-body">
+                   <h3 style="padding:20px;"><a style="color:#3f72af" href="/detail/<%= usr.userid %> "><%= usr.nom %> <%= usr.prenom %> part </a> </h3>
+                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">De:</strong> <%= usr.depart%> </h4>
+                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Vers:</strong><%= usr.dest %></h4>
+                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Le:</strong><%= usr.allezDate %></h4>
+                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Description:</strong><%= usr.description %> </h4>
+                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Véhicule:</strong><%= usr.car %> </h4>
+                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Temps:</strong><%= usr.allezTime %></h4>
+
+                   <% if( typeof user != 'undefined') { %> <% if (usr.places != 0) {%>
+                     <div style="padding-top:;"class="" id="<%= usr._id %>">
+                       <button style="margin-top:30px;margin-bottom:20px;background-color:#3F72AF;"type="submit" class="btn" onclick="reserve('<%= usr._id %>','<%= usr.dest %>','<%= usr.depart %>','<%= usr.allezDate %>','<%= usr.userid %>','<%= usr.nom %>','<%= user._id %>','<%= user.nom %>');">Reserver</button>
+                   </div>
+            </div>
+            
+
+
+
+
                 <% if (cars != "")
                  {%>
                 <div style="margin-top:20%;margin-bottom:20%;">
