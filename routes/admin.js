@@ -12,10 +12,10 @@ const passport   = require('passport');
 
 // models
 var User     = require("../models/user")
-var trajet   = require('../models/trajet');
+var Trajet   = require('../models/trajet');
 var reserver = require('../models/reserver');
 var cardispo = require('../models/cardispo');
-var cars     = require('../models/cars');
+var Cars     = require('../models/cars');
 
 // express router
 var router = express.Router()
@@ -32,15 +32,27 @@ router.get("/", checkAdmin, function (req, res) {
 
 // dashboard
 router.get("/dashboard", checkAdmin, function (req, res) {
-  res.render("admin", {admin: req.user});
+  Cars.find({},function (error, cars) {
+    if (error) {
+      res.render("error",{error: error});
+    } else {
+      Trajet.find({}).sort('-date').limit(10).exec(function (err, trajets) {
+        if (err) res.render("error", "trajets error");
+        else res.render("admin", {cars: cars, trajets: trajets, admin: req.user});
+      })
+    }
+  })
 });
 
 // login
 router.get("/login", function (req, res) {
   if (req.isAuthenticated()) {
-    if (req.user.isAdmin) res.redirect("/admin/dashboard");
+    if (req.user.admin === true) res.redirect("/admin/dashboard");
+    else res.redirect("/user/profile");
   }
-  res.render("admin_login");
+  else {
+    res.render("admin_login");
+  }
 });
 
 router.post("/login", function (req, res, next) {
@@ -57,26 +69,31 @@ router.get("/addcar", checkAdmin, function (req, res) {
 });
 
 router.post("/addcar", checkAdmin, function (req,res) {
-    cars.create({
+    Cars.create({
       mat:            req.body.mat,
       model:          req.body.model,
       places:         req.body.places,
       etablissement:  req.body.etablissement,
       remarque:       req.body.remarque
-  },function (error, suc1) {
-    if (error) res.render("error", {error: error});
-    if (suc1) {
-      console.log(suc1);
+  },function (error, car) {
+    if (error) {
+      req.flash("error_msg","une erreur s'est produite");
+      res.redirect("/admin/addcar");
+    }
+    else if (car) {
       cardispo.create({
         brand_new : true,
-        car       : suc1.mat,
-        etab      : suc1.etablissement,
-        places    : suc1.places
-      }, function (error, suc2) {
-        if (error) res.render("error", {error: error});
-        else if(suc2) {
-          console.log(suc2);
-          res.render("error", {error: "Success"});
+        car       : car.mat,
+        etab      : car.etablissement,
+        places    : car.places
+      }, function (error, dispo) {
+        if (error) {
+          req.flash("error_msg","erreur s'est produite");
+          res.redirect("/admin/addcar")
+        }
+        else if(dispo) {
+          req.flash("success_msg","Voiture crée");
+          res.redirect("/admin/dashboard");
         }
       });
     }
