@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -24,63 +23,7 @@
 <body class="profile-page sidebar-collapse"style="background-image: url('../assets/img/r1.jpg');background-repeat: no-repeat;
   background-size: cover;">
   <section class="bodyy">
-  <nav class="navbar      fixed-top  navbar-expand-lg height " color-on-scroll="100" id="sectionsNav">
-    <div class="container">
-      <div class="navbar-translate">
-        <a class="navbar-brand font-weight-bold" href="/"style="color:#112D4E;font-size:20px;">
-          <img src="" style="
-width: 80px;
-margin-bottom: 30px;
-"> </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="navbar-toggler-icon" ></span>
-          <span class="navbar-toggler-icon"></span>
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      </div>
-
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav ml-auto">
-
-
-          <li class="dropdown nav-item">
-            <a href="/" class=" nav-link"style="color:#112D4E;font-size:15px;">
-              Accueil
-            </a>
-          </li>
-          <li class="dropdown nav-item">
-              <button style="color:white;background-color:#3F72AF;"type="button" onclick="location.href='/proposer'" class="btn nav-link">Proposer un trajet</button>
-
-          </li>
-          <li class="dropdown nav-item">
-            <a href="/login" class="dropdown-toggle nav-link" data-toggle="dropdown">
-             <%= user.prenom %>
-            </a>
-            <div class="dropdown-menu dropdown-with-icons">
-              <a href="/login" class="dropdown-item">
-                <i class="material-icons">face</i> Profile
-              </a>
-              <a href="/mestrajets" class="dropdown-item">
-                <i class="material-icons">directions</i> Trajets
-              </a>
-              <a href="/mesreservations" class="dropdown-item">
-                <i class="material-icons">check</i> Reservations
-              </a>
-
-            </div>
-          </li>
-          <li class="dropdown nav-item">
-            <a href="/logoff" class=" nav-link"style="color:#112D4E;font-size:15px;">
-              Déconnection
-            </a>
-          </li>
-
-        </ul>
-      </div>
-
-    </div>
-  </nav>
+<% include ./partials/nav.ejs %>
 
   <div class="main "style="margin-left:50px;margin-right:50px;">
     <div class="profile-content"style="height:80%;">
@@ -91,20 +34,17 @@ margin-bottom: 30px;
 
 
                 <div class="card-body">
-                   <h3 style="padding:20px;"><a style="color:#3f72af" href="/detail/<%= usr.userid %> "><%= usr.nom %> <%= usr.prenom %> part </a> </h3>
-                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">De:</strong> <%= usr.depart%> </h4>
-                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Vers:</strong><%= usr.dest %></h4>
-                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Le:</strong><%= usr.allezDate %></h4>
-                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Description:</strong><%= usr.description %> </h4>
-                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Véhicule:</strong><%= usr.car %> </h4>
-                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Temps:</strong><%= usr.allezTime %></h4>
+                   <h3 style="padding:20px;">Recap</h3>
+                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Départ:</strong> <%= recap.depart%> </h4>
+                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Etape:</strong><%= recap.etape %></h4>
+                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Destination:</strong><%= recap.dest %></h4>
+                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Etablissement:</strong><%= recap.etab %> </h4>
+                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Date de départ:</strong><%= allerDate %> </h4>
+                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Date de retour:</strong><%= finDate %></h4>
 
-                   <% if( typeof user != 'undefined') { %> <% if (usr.places != 0) {%>
-                     <div style="padding-top:;"class="" id="<%= usr._id %>">
-                       <button style="margin-top:30px;margin-bottom:20px;background-color:#3F72AF;"type="submit" class="btn" onclick="reserve('<%= usr._id %>','<%= usr.dest %>','<%= usr.depart %>','<%= usr.allezDate %>','<%= usr.userid %>','<%= usr.nom %>','<%= user._id %>','<%= user.nom %>');">Reserver</button>
-                   </div>
+
             </div>
-            
+
 
 
 
