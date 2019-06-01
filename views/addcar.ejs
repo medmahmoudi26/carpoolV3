@@ -1,11 +1,6 @@
-<<<<<<< HEAD
-<!DOCTYPE html>
+
 <html lang="fr" dir="ltr">
-=======
-<<<<<<< HEAD
 
-
->>>>>>> 9eca41d8e8cc34887f116fd14c4ca2deeffd9f44
 <head>
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/.png">
@@ -79,8 +74,8 @@
 
 
 
-              <input type="submit" name="submit" >
-              <div class="card-body ">
+
+              <div class="card-body "style="padding-left:10%;">
 
                 <span class="bmd-form-group">
 
@@ -88,24 +83,18 @@
                     <div class="input-group-prepend">
 
                     </div>
-                    <input type="text" name="mat" placeholder="matricule">
+                    <input class="form-control" type="text" name="mat" placeholder="matricule">
                   </div>
                 </span>
                 <span class="bmd-form-group">
+                  <div class="message1">
+                <% include ./partials/messages %>
+              </div>
                   <div class="input-group">
                     <div class="input-group-prepend">
 
                     </div>
-                    <input type="text" name="model" placeholder="marque">
-                  </div>
-                </span>
-                <span class="bmd-form-group">
-
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-
-                    </div>
-                    <input type="number" name="places" placeholder="nombre de places">
+                    <input class="form-control" type="text" name="model" placeholder="marque">
                   </div>
                 </span>
                 <span class="bmd-form-group">
@@ -114,7 +103,7 @@
                     <div class="input-group-prepend">
 
                     </div>
-                      <input type="text" name="etablissement" placeholder="etablissement">
+                    <input class="form-control" type="number" name="places" placeholder="nombre de places">
                   </div>
                 </span>
                 <span class="bmd-form-group">
@@ -123,7 +112,16 @@
                     <div class="input-group-prepend">
 
                     </div>
-                    <input type="text" name="remarque" placeholder="remarque">
+                      <input class="form-control" type="text" name="etablissement" placeholder="etablissement">
+                  </div>
+                </span>
+                <span class="bmd-form-group">
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+
+                    </div>
+                    <input class="form-control" type="text" name="remarque" placeholder="remarque">
                   </div>
                 </span>
               </div>
@@ -229,26 +227,6 @@
        </script>
 </body>
 
-<<<<<<< HEAD
-=======
-=======
-<!DOCTYPE html>
-<html lang="fr" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Test car tmp</title>
-  </head>
-  <body>
-    <form class="" action="/admin/addcar" method="post"><br>
-      <input type="text" name="mat" placeholder="matricule"><br>
-      <input type="text" name="model" placeholder="marque"><br>
-      <input type="number" name="places" placeholder="nombre de places"><br>
-      <input type="text" name="etablissement" placeholder="etablissement"><br>
-      <input type="text" name="remarque" placeholder="remarque"><br>
-      <input type="submit" name="submit" >
-      <% include ./partials/messages.ejs %>
-    </form>
-  </body>
->>>>>>> refs/remotes/origin/master
->>>>>>> 9eca41d8e8cc34887f116fd14c4ca2deeffd9f44
+
+
 </html>

@@ -23,9 +23,10 @@
 
 <body class="profile-page sidebar-collapse" style="background-image: url('../assets/img/r1.jpg'); background-repeat: no-repeat;
   background-size: cover;" >
+  <% include ./partials/nav.ejs %>
   <section class="bodyy" >
 
-<% include ./partials/nav.ejs %>
+
 
     <div class="main "style="margin-left:50px;margin-right:50px;border-radius:0px;">
       <div class="profile-content">
@@ -161,6 +162,7 @@
                         <div class="card-title text-center"style="margin-bottom:2%;">
 
             <div class="text-center">
+              <a class="link"href="/user/reset">Reset Password</a><br>
               <input style="margin-top:40px;margin-bottom:20px;background-color:#3F72AF;"type="submit" class="btn" name="submit" type="submit">
 						</form>
             </div>
