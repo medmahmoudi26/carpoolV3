@@ -100,5 +100,12 @@ router.post("/addcar", checkAdmin, function (req,res) {
   });
 });
 
+// deconnect
+router.get("/logoff", function (req, res) {
+  req.session.destroy();
+  req.logout();
+  res.redirect('/')
+})
+
 // exporting
 module.exports = router;

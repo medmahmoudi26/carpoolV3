@@ -8,7 +8,7 @@
     <%= admin.prenom %> <%= admin.nom %><br>
     <% include ./partials/messages.ejs %><br>
     <a href="/admin/addcar">Ajouter véhicule</a><br><br>
-
+    <a href="/admin/logoff">Logoff</a>
     <% cars.forEach(function (car) { %>
       <div id="<%= car._id %>">
       <input type="text" id="mat-<%= car._id %>" value=<%=car.mat%>>
