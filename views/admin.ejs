@@ -1,59 +1,231 @@
-<!DOCTYPE html>
-<html lang="fr" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Page admin</title>
-  </head>
-  <body>
-    <%= admin.prenom %> <%= admin.nom %><br>
-    <% include ./partials/messages.ejs %><br>
-    <a href="/admin/addcar">Ajouter véhicule</a><br><br>
 
-    <% cars.forEach(function (car) { %>
-      <div id="<%= car._id %>">
-      <input type="text" id="mat-<%= car._id %>" value=<%=car.mat%>>
-      <input type="text" id="model-<%= car._id %>" value=<%=car.model%>>
-      <button type="button" name="del" onclick="del('<%= car._id %>');">Delete</button>
-      <button type="button" name="update" onclick="update('<%= car._id %>')">Update</button>
-      <div id="updated-<%= car._id %>">
-      </div>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/.png">
+  <link rel="icon" type="image/png" href="../assets/img/.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    profile
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <!-- CSS Files -->
+  <link href="../assets/css/material-kit.css?v=2.1.1" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="../assets/demo/demo.css" rel="stylesheet" />
+  <link href="../assets/demo/vertical-nav.css" rel="stylesheet" />
+</head>
+
+<body class="profile-page sidebar-collapse" style="background-image: url('../assets/img/r1.jpg'); background-repeat: no-repeat;
+  background-size: cover;" >
+  <nav class="navbar bg-white navbar-expand-lg height " color-on-scroll="100" id="sectionsNav" style="height: 100px;">
+    <div class="container">
+    <div class="navbar-translate">
+      <a class="navbar-brand font-weight-bold" href="/"style="color:#112D4E;font-size:20px;">
+        Travel easy </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="navbar-toggler-icon" ></span>
+        <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon"></span>
+      </button>
     </div>
-    <% }) %>
-    <% trajets.forEach(function(trajet) { %>
-      Nom: <%= trajet.nom %><br>
-      Prenom: <%= trajet.prenom %><br>
-      Départ: <%= trajet.depart %><br>
-      Etape: <%= trajet.etape %><br>
-      Destination: <%= trajet.dest %><br>
-      Date d'aller: <%= trajet.allezDate %><br>
-      Temps d'aller: <%= trajet.allezTime %><br>
-      Places: <%= trajet.places %><br>
-      Véhicule: <%= trajet.car %><br>
-      Description: <%= trajet.description %>
-    <% }) %>
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-      var socket = io.connect("http://localhost:80");
-      function update(id) {
-        var mat = document.getElementById('mat-'+id).value;
-        var model = document.getElementById('model-'+id).value;
-        console.log('emitting');
-        socket.emit('update', {id: id, mat: mat, model: model});
-      }
-      function del(id) {
-        socket.emit('delete', id);
-      }
-      socket.on('updated', function(id){
-        var space = document.getElementById("updated-"+id)
-  			space.innerHTML = '<b>updated</b>'
-      });
-      socket.on('error', function(error) {
-        alert(error);
-      });
-      socket.on('deleted', function (id) {
-        var space = document.getElementById(id)
-        space.parentNode.removeChild(space);
-      });
-    </script>
-  </body>
+
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ml-auto">
+
+
+        <li class="dropdown nav-item">
+          <a href="/index" class=" nav-link"style="color:#112D4E;font-size:15px;">
+
+          </a>
+        </li>
+        <li class="dropdown nav-item">
+          <a href="/user/register" class=" nav-link"style="color:#112D4E;font-size:15px;">
+
+          </a>
+        </li>
+
+      </ul>
+    </div>
+
+  </div>
+</nav>
+  <section class="bodyy" >
+
+
+
+    <div class="main "style="">
+      <div class="profile-content">
+        <div class="container">
+        <div class="row">
+
+          <div class="col-md-6 ml-auto mr-auto">
+            <div class="name" style="text-align:center;margin-top:60px;margin-bottom: 60px;">
+              <h2 class="title"><strong>Bienvenue  <%= admin.prenom %> <%= admin.nom %></strong></h2>
+              <div class="message1">
+            <% include ./partials/messages.ejs %>
+          </div>
+
+              <div class="text-center message1">
+                <a class="link"href="/admin/addcar">Ajouter véhicule</a><br>
+              </form>
+              </div>
+
+
+              <% cars.forEach(function (car) { %>
+                <div class="row"style="margin-top:15%;" id="<%= car._id %>">
+
+                  <div class="col-8">
+                <input type="text"class="form-control" id="mat-<%= car._id %>" value=<%=car.mat%>><br>
+                <input type="text"class="form-control" id="model-<%= car._id %>" value=<%=car.model%>><br>
+                <div id="updated-<%= car._id %>">
+                </div>
+              </div>
+              <div class="col-4">
+                <button type="button" style="background-color:#3F72AF;"class="btn" name="del" onclick="del('<%= car._id %>');">Delete</button>
+                <button type="button" style="background-color:#3F72AF;" class="btn" name="update" onclick="update('<%= car._id %>')">Update</button>
+                </div>
+
+              </div>
+              <% }) %>
+              <% trajets.forEach(function(trajet) { %>
+                Nom: <%= trajet.nom %><br>
+                Prenom: <%= trajet.prenom %><br>
+                Départ: <%= trajet.depart %><br>
+                Etape: <%= trajet.etape %><br>
+                Destination: <%= trajet.dest %><br>
+                Date d'aller: <%= trajet.allezDate %><br>
+                Temps d'aller: <%= trajet.allezTime %><br>
+                Places: <%= trajet.places %><br>
+                Véhicule: <%= trajet.car %><br>
+                Description: <%= trajet.description %>
+              <% }) %>
+
+
+            </div>
+
+          </div>
+        </div>
+
+
+
+
+</section>
+<footer class="footer footer-white"style="">
+  <div class="container">
+    <a class="footer-brand" href="/"><img src="" style="
+width: 80px;
+margin-bottom: 30px;
+"></a>
+    <ul class="pull-center">
+      <li>
+        <a href="/">
+          Accueil
+        </a>
+      </li>
+      <li>
+        <a href="/">
+          Chercher un trajet
+        </a>
+      </li>
+      <li>
+        <a href="/proposer">
+          Proposer un trajet
+        </a>
+      </li>
+
+      <li>
+        <a href="https://www.linkedin.com/in/marouen-kanoun-627a947b/">
+          Contacter nous
+        </a>
+      </li>
+    </ul>
+    <ul class="social-buttons float-right">
+      <li>
+        <a href="#" target="_blank" class="btn btn-just-icon btn-link btn-twitter">
+          <i class="fa fa-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#" target="_blank" class="btn btn-just-icon btn-link btn-dribbble">
+          <i class="fa fa-dribbble"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#" target="_blank" class="btn btn-just-icon btn-link btn-google">
+          <i class="fa fa-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+</footer>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io.connect("http://localhost:80");
+  function update(id) {
+    var mat = document.getElementById('mat-'+id).value;
+    var model = document.getElementById('model-'+id).value;
+    console.log('emitting');
+    socket.emit('update', {id: id, mat: mat, model: model});
+  }
+  function del(id) {
+    socket.emit('delete', id);
+  }
+  socket.on('updated', function(id){
+    var space = document.getElementById("updated-"+id)
+    space.innerHTML = '<b>updated</b>'
+  });
+  socket.on('error', function(error) {
+    alert(error);
+  });
+  socket.on('deleted', function (id) {
+    var space = document.getElementById(id)
+    space.parentNode.removeChild(space);
+  });
+</script>
+
+  <!--   Core JS Files   -->
+  <script src="../assets/js/core/jquery.min.js" type="text/javascript"></script>
+  <script src="../assets/js/core/popper.min.js" type="text/javascript"></script>
+  <script src="../assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+  <script src="../assets/js/plugins/moment.min.js"></script>
+  <!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
+  <script src="../assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
+  <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+  <script src="../assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
+  <!--  Google Maps Plugin    -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+  <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
+  <script src="../assets/js/plugins/bootstrap-tagsinput.js"></script>
+  <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
+  <script src="../assets/js/plugins/bootstrap-selectpicker.js" type="text/javascript"></script>
+  <!--	Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
+  <script src="../assets/js/plugins/jasny-bootstrap.min.js" type="text/javascript"></script>
+  <!--	Plugin for Small Gallery in Product Page -->
+  <script src="../assets/js/plugins/jquery.flexisel.js" type="text/javascript"></script>
+  <!-- Plugins for presentation and navigation  -->
+  <script src="../assets/demo/modernizr.js" type="text/javascript"></script>
+  <script src="../assets/demo/vertical-nav.js" type="text/javascript"></script>
+  <!-- Place this tag in your head or just before your close body tag. -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Js With initialisations For Demo Purpose, Don't Include it in Your Project -->
+  <script src="../assets/demo/demo.js" type="text/javascript"></script>
+  <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
+  <script src="../assets/js/material-kit.js?v=2.1.1" type="text/javascript"></script>
+  <script>
+    $(document).ready(function() {
+      //init DateTimePickers
+      materialKit.initFormExtendedDatetimepickers();
+
+      // Sliders Init
+      materialKit.initSliders();
+    });
+  </script>
+</body>
 </html>
