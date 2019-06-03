@@ -146,6 +146,13 @@ color: #112D4E;
 .message1{
   margin: 5% 5% 5% 9%;
 text-align: center;
+  color: #3f72af;
+}
+.message2{
+  margin-top: 5%;
+  text-align: center;
+  font-size: 130%;
+  color: #3f72af;
 }
 .link{
   color: #163457;
@@ -11046,6 +11053,7 @@ a .material-icons {
   background: #FFFFFF;
   position: relative;
   z-index: 3;
+
 }
 
 .form-check,
@@ -22425,6 +22433,11 @@ select.selectpicker {
 .bodyy2{padding-top:200px;}
 .bodyy{padding-top:100px;}
 .bodyy4{padding-top:100px;}
+.main{
+  margin-left: 50px;
+margin-right: 50px;
+border-radius: 0px;
+}
 
  }
   @media screen and (max-width: 1200px) {
@@ -22530,7 +22543,7 @@ select.selectpicker {
         height: 100px;
       }
       .bodyy{
-        margin-top:200px ;
+        margin-top:100px ;
         margin-bottom: 100px ;
       }
       .bodyy4{
