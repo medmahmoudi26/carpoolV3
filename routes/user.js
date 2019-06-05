@@ -132,10 +132,9 @@ router.post('/register', function(req,res){
 router.post('/update', function (req, res) {
   if (!req.isAuthenticated()) {
     req.flash("error_msg", "vous n'etes pas connecter");
-    res.redirect("/");
+    res.redirect("/user/login");
   }
-  if (req.body.submit) {
-    var hashedpass = bcrypt.hashSync(req.body.password, 10)
+  else if (req.body.submit) {
     User.findOneAndUpdate({_id: req.user._id},{$set:{
       nom        : req.body.nom,
       prenom     : req.body.prenom,
@@ -147,13 +146,12 @@ router.post('/update', function (req, res) {
     }},{ new: true }, function (err, result) {
       console.log(result);
       if (err) res.render('error', {error:err});
-      if (result) {
+      else if (result) {
         req.user = result;
         console.log("updating profile :"+req.user);
         reserver.find({proposerid: req.user._id}, function (error,reservation) {
           if (error) res.render('error', {error: error});
-          console.log(reservation);
-          if (reservation) res.render('profile', {user:req.user, reservations:reservation});
+          else if (reservation) res.render('profile', {user:req.user, reservations:reservation});
         });
       }
     });

@@ -41,7 +41,7 @@
                   <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Destination:</strong><%= recap.dest %></h4>
                   <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Etablissement:</strong><%= recap.etab %> </h4>
                   <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Date de départ:</strong><%= allerDate %> </h4>
-                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Date de retour:</strong><%= finDate %></h4>
+                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Retour de la voiture au parking:</strong><%= finDate %></h4>
 
 
             </div>
@@ -52,7 +52,7 @@
 
                 <% if (cars != "")
                  {%>
-                <div style="margin-top:20%;margin-bottom:20%;">
+                <div style="margin-top:5%;margin-bottom:20%;">
                   <div class="form-group">
                     <label for="exampleFormControlSelect1">Sélectionner une voiture</label>
                     <select name="car" class="form-control selectpicker" data-style="btn btn-link" id="exampleFormControlSelect1">
@@ -69,7 +69,7 @@
 </div>
 <div style="padding-top:20px;">
 <div class="form-group">
-<label for="exampleFormControlInput1">Quand partez vous de nouveau</label>
+<label for="exampleFormControlInput1">Quand partez vous en retour</label>
 <input type="text" class="form-control datetimepicker" id='partne' name="retourDepartDate" required>
 </div>
 </div>
