@@ -61,11 +61,11 @@
 
 
     <div class="main "style="">
-      <div class="profile-content">
+      <div class="profile-content"style="padding-bottom:60px;">
         <div class="container">
         <div class="row">
 
-          <div class="col-md-6 ml-auto mr-auto">
+          <div class="col-md-8 ml-auto mr-auto">
             <div class="name" style="text-align:center;margin-top:60px;margin-bottom: 60px;">
               <h2 class="title"><strong>Bienvenue  <%= admin.prenom %> <%= admin.nom %></strong></h2>
               <div class="message1">
@@ -74,49 +74,67 @@
 
               <div class="text-center message1">
                 <a class="link"href="/admin/addcar">Ajouter véhicule</a><br>
-              </form>
+
               </div>
 
-
+              <div>
               <% cars.forEach(function (car) { %>
-                <div class="row"style="margin-top:15%;" id="<%= car._id %>">
+                <div class="row"style="margin-top:5%;" id="<%= car._id %>">
 
-                  <div class="col-8">
-                <input type="text"class="form-control" id="mat-<%= car._id %>" value=<%=car.mat%>><br>
-                <input type="text"class="form-control" id="model-<%= car._id %>" value=<%=car.model%>><br>
+                  <div class="col-4">
+                <input type="text"class="form-control" id="mat-<%= car._id %>" value=<%=car.mat%>>
+                <input type="text"class="form-control" id="model-<%= car._id %>" value=<%=car.model%>>
                 <div id="updated-<%= car._id %>">
                 </div>
               </div>
+              <div class="col-4">
+                  <div id="updated-<%= car._id %>">
+            <input type="text"class="form-control" id="mat-<%= car._id %>" value=<%=car.mat%>>
+            <input type="text"class="form-control" id="model-<%= car._id %>" value=<%=car.model%>>
+
+            </div>
+          </div>
               <div class="col-4">
                 <button type="button" style="background-color:#3F72AF;"class="btn" name="del" onclick="del('<%= car._id %>');">Delete</button>
                 <button type="button" style="background-color:#3F72AF;" class="btn" name="update" onclick="update('<%= car._id %>')">Update</button>
                 </div>
 
               </div>
-              <% }) %>
-              <% trajets.forEach(function(trajet) { %>
-                Nom: <%= trajet.nom %><br>
-                Prenom: <%= trajet.prenom %><br>
-                Départ: <%= trajet.depart %><br>
-                Etape: <%= trajet.etape %><br>
-                Destination: <%= trajet.dest %><br>
-                Date d'aller: <%= trajet.allezDate %><br>
-                Temps d'aller: <%= trajet.allezTime %><br>
-                Places: <%= trajet.places %><br>
-                Véhicule: <%= trajet.car %><br>
-                Description: <%= trajet.description %>
-              <% }) %>
+              </div>
+
+
 
 
             </div>
 
           </div>
+
+          <div class="col-md-8 ml-auto mr-auto">
+          <% }) %>
+          <% trajets.forEach(function(trajet) { %>
+          <div class="card" style="width: ;display:inline-block;height:">
+            <div class="card-body">
+
+               <h3 style="padding:20px;"><%= trajet.nom %> <%= trajet.prenom %> a proposé un trajet</h3>
+              <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">De:</strong> <%= trajet.depart %><strong style="margin-right:10px;margin-left:30px;">Vers:</strong><%= trajet.dest %></h4>
+                <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Le:</strong> <%= trajet.allezDate %><strong style="margin-right:10px;margin-left:30px;">Heure:</strong><%= trajet.allezTime %></h4>
+                <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Etape:</strong><%= trajet.etape %>%><strong style="margin-right:10px;margin-left:30px;">Véhicule:</strong> <%= trajet.car %></h4>
+                <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">  Places:</strong> <%= trajet.places %><h4>
+
+                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Description:</strong> <%= trajet.description %><h4>
+
+        </div>
+          </div>
+            <% }) %>
+        </div>
+
         </div>
 
 
 
 
 </section>
+
 <footer class="footer footer-white"style="">
   <div class="container">
     <a class="footer-brand" href="/"><img src="" style="
