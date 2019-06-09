@@ -60,8 +60,9 @@
 
 
 
-    <div class="main "style="">
-      <div class="profile-content"style="padding-bottom:60px;">
+
+      <section class="profile-content main"style="padding-bottom:60px;">
+
         <div class="container">
         <div class="row">
 
@@ -74,10 +75,10 @@
 
               <div class="text-center message1">
                 <a class="link"href="/admin/addcar">Ajouter véhicule</a><br>
-
+              </form>
               </div>
 
-              <div>
+              <section>
               <% cars.forEach(function (car) { %>
                 <div class="row"style="margin-top:5%;" id="<%= car._id %>">
 
@@ -94,14 +95,14 @@
 
             </div>
           </div>
-              <div class="col-4">
+              <div class="col-4 text-center"style="">
                 <button type="button" style="background-color:#3F72AF;"class="btn" name="del" onclick="del('<%= car._id %>');">Delete</button>
                 <button type="button" style="background-color:#3F72AF;" class="btn" name="update" onclick="update('<%= car._id %>')">Update</button>
                 </div>
 
               </div>
-              </div>
-
+              <% }) %>
+            </section>
 
 
 
@@ -110,7 +111,7 @@
           </div>
 
           <div class="col-md-8 ml-auto mr-auto">
-          <% }) %>
+
           <% trajets.forEach(function(trajet) { %>
           <div class="card" style="width: ;display:inline-block;height:">
             <div class="card-body">
@@ -126,15 +127,15 @@
         </div>
           </div>
             <% }) %>
-        </div>
+            </div>
+        </section>
 
-        </div>
+
 
 
 
 
 </section>
-
 <footer class="footer footer-white"style="">
   <div class="container">
     <a class="footer-brand" href="/"><img src="" style="
