@@ -68,7 +68,7 @@ router.post('/chercher', function(req,res){
       date_object : {$gte: req.body.date} // date is stored in string format in the trajets schema
     }, function(error, allant){
       if (error) res.render('error', {error: error});
-      // find en etap
+      // find en etap (same destination, pick up on road)
       trajet.find({
         etape:      req.body.depart,
         dest        : req.body.dest,
@@ -76,12 +76,23 @@ router.post('/chercher', function(req,res){
         date_object : {$gte: req.body.date}
       }, function (error, etape) {
         if (error) res.render('error',{error: error});
-        if (req.isAuthenticated()){
-          res.render('found',{allant: allant, etape:etape, user:req.user});
-        }else {
-          //transfer date object to iso string
-          if (etape.allezDate) etape.allezDate = etape.allezDate.toISOString();
-          res.render('found',{allant: allant, etape:etape});
+        // leaving on road
+        else {
+          trajet.find({
+            etape: req.body.etap,
+            etap: req.body.dest,
+            allezDate: new DateOnly(req.body.date).toISOString(),
+            date_object: {$gte: req.body.date}
+          }, function (error, descend) {
+            if (error) res.render("error", {error: error});
+            else if (req.isAuthenticated()){
+              res.render('found',{allant: allant, etape: etape, user: req.user, descend: descend});
+            }else {
+              //transfer date object to iso string
+              if (etape.allezDate) etape.allezDate = etape.allezDate.toISOString();
+              res.render('found',{allant: allant, etape:etape});
+            }
+          });
         }
       });
     });
