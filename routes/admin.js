@@ -36,9 +36,12 @@ router.get("/dashboard", checkAdmin, function (req, res) {
     if (error) {
       res.render("error",{error: error});
     } else {
-      Trajet.find({}).sort('-date').limit(10).exec(function (err, trajets) {
+      Trajet.find({}).exec(function (err, trajets) {
         if (err) res.render("error", "trajets error");
-        else res.render("admin", {cars: cars, trajets: trajets, admin: req.user});
+        else {
+          trajets.reverse();
+          res.render("admin", {cars: cars, trajets: trajets, admin: req.user});
+        }
       })
     }
   })

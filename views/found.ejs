@@ -37,7 +37,9 @@
      </div>
      <div class="col-sm">
            <h2 class="text-center font-weight-normal"style="color:#112D4E;padding-bottom:40px;padding-top:40px;"> Resultats <h2>
-        <% if (allant != ''){%> <% allant.forEach(function(usr) { %>
+        <% if (allant != ''){%>
+          <h3>Partant de <%= request.depart %> vers <%= request.dest %></h3>
+          <% allant.forEach(function(usr) { %>
        <div class="card" style="width: ;display:inline-block;height:">
          <div class="card-body">
 
@@ -60,6 +62,7 @@
 <% } %> <% }else{ %>
     <h3 class="text-center font-weight-normal"style="color:#112D4E;padding-bottom:180px;padding-top:100px;">connecter pour reserver un trajet <h3><% } %>
       <% }); %> <% } if (etape != '') { %>
+        <h3>Passant par <%= request.depart %> vers <%= request.dest %></h3>
         <% etape.forEach(function(usr) { %>
         <div class="card" style="width: ;display:inline-block;height:">
           <div class="card-body">
@@ -85,7 +88,37 @@
               <h3 class="text-center font-weight-normal"style="color:#112D4E;padding-bottom:180px;padding-top:100px;">le nombre de places est complet <h3>
       <% } %> <% }else{ %>
           <h3 class="text-center font-weight-normal"style="color:#112D4E;padding-bottom:180px;padding-top:100px;">connecter pour reserver un trajet <h3><% } %>
-            <% }) } %> <% if (allant == '' && etape == '') { %>
+            <% }) } %>
+            <% if (descend != '') { %>
+              <h3>Partant de <%= request.depart %> passant par <%= request.dest %></h3>
+              <% descend.forEach(function(usr) { %>
+              <div class="card" style="width: ;display:inline-block;height:">
+                <div class="card-body">
+
+                   <h3 style="padding:20px;"> <a style="color:#3f72af" href="detail/<%= usr.userid %>"><%= usr.nom %> <%= usr.prenom %> part </a> </h3>
+                   <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">De:</strong> <%= usr.depart%> </h4>
+                   <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Vers:</strong><%= usr.dest %></h4>
+                   <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Le:</strong><%= usr.allezDate %></h4>
+                   <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Et passe par:</strong><%= usr.etape%></h4>
+                   <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">L'heure:</strong><%= usr.allezHeure %></h4>
+                   <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Description:</strong><%= usr.description %> </h4>
+                   <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Véhicule:</strong><%= usr.car %> </h4>
+
+
+      <% if(typeof user != 'undefined') { %>
+      	<% if (usr.places != 0) {%>
+                     <div style="padding-top:;"class="" id="<%= usr._id %>">
+                       <button style="margin-top:30px;margin-bottom:20px;background-color:#3F72AF;"type="submit" class="btn" onclick="reserve('<%= usr._id %>','<%= usr.dest %>','<%= usr.depart %>','<%= usr.allezDate %>','<%= usr.userid %>','<%= usr.nom %>','<%= user._id %>','<%= user.nom %>');">Reserver</button>
+                   </div>
+            </div>
+            </div>
+            <% }else { %>
+                    <h3 class="text-center font-weight-normal"style="color:#112D4E;padding-bottom:180px;padding-top:100px;">le nombre de places est complet <h3>
+            <% } %> <% }else{ %>
+                <h3 class="text-center font-weight-normal"style="color:#112D4E;padding-bottom:180px;padding-top:100px;">connecter pour reserver un trajet <h3><% } %>
+                  <% }) } %>
+
+            <% if (allant == '' && etape == '' && descend == '') { %>
                 <h3 class="text-center font-weight-normal"style="color:#112D4E;padding-bottom:180px;padding-top:100px;">Pas de resultat pour votre recherche<h3><% } %>
      </div>
      <div class="col-sm">

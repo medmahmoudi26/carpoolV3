@@ -44,7 +44,10 @@ router.get('/logoff', function(req,res){
 router.get('/mestrajets', checkAuth, function (req,res) {
   trajet.find({userid: req.user._id}, function (error, proposition) {
     if (error) res.render('error', {error: error});
-    else if (proposition) res.render('mestrajets', {propo: proposition, user:req.user});
+    else if (proposition) {
+      proposition.reverse();
+      res.render('mestrajets', {propo: proposition, user:req.user});
+    }
   });
 });
 
@@ -52,7 +55,10 @@ router.get('/mestrajets', checkAuth, function (req,res) {
 router.get('/mesreservations', checkAuth, function (req,res) {
   reserver.find({reserverid: req.user._id}, function (error,reserv) {
     if (error) res.render('error', {error:error});
-    else if (reserv) res.render('mesreservations', {reserv:reserv, user: req.user});
+    else if (reserv) {
+      reserv.reverse();
+      res.render('mesreservations', {reserv:reserv, user: req.user});
+    }
   });
 });
 

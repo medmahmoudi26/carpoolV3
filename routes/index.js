@@ -79,18 +79,18 @@ router.post('/chercher', function(req,res){
         // leaving on road
         else {
           trajet.find({
-            etape: req.body.etap,
+            depart: req.body.depart,
             etap: req.body.dest,
             allezDate: new DateOnly(req.body.date).toISOString(),
             date_object: {$gte: req.body.date}
           }, function (error, descend) {
             if (error) res.render("error", {error: error});
             else if (req.isAuthenticated()){
-              res.render('found',{allant: allant, etape: etape, user: req.user, descend: descend});
+              res.render('found',{allant: allant, etape: etape, user: req.user, descend: descend, request: req.body});
             }else {
               //transfer date object to iso string
               if (etape.allezDate) etape.allezDate = etape.allezDate.toISOString();
-              res.render('found',{allant: allant, etape:etape});
+              res.render('found',{allant: allant, etape:etape, descend: descend, request: req.body});
             }
           });
         }
