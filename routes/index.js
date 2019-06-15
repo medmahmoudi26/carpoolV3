@@ -70,7 +70,7 @@ router.post('/chercher', function(req,res){
       if (error) res.render('error', {error: error});
       // find en etap (same destination, pick up on road)
       trajet.find({
-        etape:      req.body.depart,
+        etape       : req.body.depart,
         dest        : req.body.dest,
         allezDate   : new DateOnly(req.body.date).toISOString(),
         date_object : {$gte: req.body.date}
@@ -79,10 +79,10 @@ router.post('/chercher', function(req,res){
         // leaving on road
         else {
           trajet.find({
-            depart: req.body.depart,
-            etap: req.body.dest,
-            allezDate: new DateOnly(req.body.date).toISOString(),
-            date_object: {$gte: req.body.date}
+            depart      : req.body.depart,
+            etape       : req.body.dest,
+            allezDate   : new DateOnly(req.body.date).toISOString(),
+            date_object : {$gte: req.body.date}
           }, function (error, descend) {
             if (error) res.render("error", {error: error});
             else if (req.isAuthenticated()){
