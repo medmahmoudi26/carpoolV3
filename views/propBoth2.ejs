@@ -31,28 +31,33 @@
       <div class="container" >
             <form style=" padding-left:10%;padding-right:10%;padding-top:5%;padding-bottom: 5%;" action="/aller&retour2" method="post">
               <h3 class="text-center font-weight-normal"style="color:#112D4E;"> Proposer un trajet <h3>
+                <h4 class="text-center font-weight-normal"style="color:#3f72af;"> Etape 2: choisir la voiture <h4>
+                  <div class="card-body">
+                   <h3 style="padding:20px;COLOR: #3f72af;font-weight: 500;">Recap</h3>
+                   <div class="container">
+                     <div class="row">
+                  <div class="col-sm">
+                        <h5 style="min-height:60px;"><strong style="margin-right:10px;">Départ:</strong> <%= recap.depart%> </h5>
+                          <h5 style="min-height:60px;"><strong style="margin-right:10px;">Etablissement:</strong><%= recap.etab %> </h5>
+                     </div>
+                     <div class="col-sm">
+                       <h5 style="min-height:60px;"><strong style="margin-right:10px;">Etape:</strong><%= recap.etape %></h5>
+                       <h5 style="min-height:60px;"><strong style="margin-right:10px;">Date de départ:</strong><%= allerDate %> </h5>
+                     </div>
+                     <div class="col-sm">
+                       <h5 style="min-height:60px;"><strong style="margin-right:10px;">Destination:</strong><%= recap.dest %></h5>
+                       <h5 style="min-height:60px;"><strong style="margin-right:10px;">Retourner la voiture au parking:<br></strong><%= finDate %></h5>
 
-
-
-                <div class="card-body">
-                   <h3 style="padding:20px;">Recap</h3>
-                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Départ:</strong> <%= recap.depart%> </h4>
-                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Etape:</strong><%= recap.etape %></h4>
-                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Destination:</strong><%= recap.dest %></h4>
-                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Etablissement:</strong><%= recap.etab %> </h4>
-                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Date de départ:</strong><%= allerDate %> </h4>
-                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Retour de la voiture au parking:</strong><%= finDate %></h4>
-
-
-            </div>
-
-
-
+                     </div>
+                     </div>
+                     </div>
+                     </div>
 
 
                 <% if (cars != "")
                  {%>
-                <div style="margin-top:5%;margin-bottom:20%;">
+                <div style="margin-top:5%;margin-bottom:20%;padding-left: 20%;
+    padding-right: 20%;">
                   <div class="form-group">
                     <label for="exampleFormControlSelect1">Sélectionner une voiture</label>
                     <select name="car" class="form-control selectpicker" data-style="btn btn-link" id="exampleFormControlSelect1">

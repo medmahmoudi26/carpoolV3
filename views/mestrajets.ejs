@@ -40,17 +40,32 @@
      <div class="col-sm">
            <h2 class="text-center font-weight-normal"style="color:#112D4E;padding-bottom:40px;padding-top:40px;">mes trajets  <h2>
         <% if (propo != ''){%> <% propo.forEach(function(propo) { %>
-       <div class="card" style="width: ;display:inline-block;height:">
-         <div class="card-body">
+          <div class="card">
+        <div class="card-body">
+          <h3 style="padding:20px;">vous avez proposé un trajet</h3>
 
-            <h3 style="padding:20px;">vous avez proposé un trajet</h3>
-           <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">De:</strong> <%= propo.depart %><strong style="margin-right:10px;margin-left:30px;">Vers:</strong><%= propo.dest %></h4>
-             <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Le:</strong> <%= propo.allezDate %><strong style="margin-right:10px;margin-left:30px;">Heure:</strong><%= propo.allezTime %></h4>
-             <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Etape:</strong><%= propo.etape %>%><strong style="margin-right:10px;margin-left:30px;">Véhicule:</strong> <%= propo.car %></h4>
+          <div class="container">
+  <div class="row">
+  <div class="col-sm">
+  <h5 style="min-height:55px;"><strong style="margin-right:10px;">De:</strong> <%= propo.depart %></h5>
+  <h5 style="min-height:55px;"><strong style="margin-right:10px;">Heure:</strong> <%= propo.allezTime %></h5>
+   <h5 style="min-height:55px;"><strong style="margin-right:10px;">Nombre de Places:</strong><% if (propo.places != 0) { %> <%= propo.places %> <% }else { %> tous les places sont reservées <% } %></h5>
 
-               <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Nombre de Places:</strong> <% if (propo.places != 0) { %> <%= propo.places %> <% }else { %> tous les places sont reservées <% } %><h4>
-     </div>
-     </div>
+  </div>
+  <div class="col-sm">
+  <h5 style="min-height:55px;"><strong style="margin-right:10px;">Vers:</strong> <%= propo.dest %></h5>
+  <h5 style="min-height:55px;"><strong style="margin-right:10px;">Etape:</strong><%= propo.etape %></h5>
+  </div>
+  <div class="col-sm">
+
+              <h5 style="min-height:55px;"><strong style="margin-right:10px;">Le:</strong><%= propo.allezDate %></h5>
+                <h5 style="min-height:55px;"><strong style="margin-right:10px;">Véhicule:</strong><%= propo.car %></h5>
+  </div>
+  </div>
+  </div>
+
+    </div>
+    </div>
 <% }) %> <% }else{ %>
         <h3 class="text-center font-weight-normal"style="color:#112D4E;padding-bottom:180px;padding-top:100px;">vous n'avez proposé aucun trajet<h3>
   <% } %>

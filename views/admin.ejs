@@ -77,9 +77,9 @@
                 <a class="link"href="/admin/addcar">Ajouter véhicule</a><br>
               </form>
               </div>
-
-              <section>
               <% cars.forEach(function (car) { %>
+              <section>
+
                 <div class="row"style="margin-top:5%;" id="<%= car._id %>">
 
                   <div class="col-4">
@@ -101,8 +101,8 @@
                 </div>
 
               </div>
-              <% }) %>
             </section>
+            <% }) %>
 
 
 
