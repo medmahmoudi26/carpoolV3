@@ -103,6 +103,22 @@ router.post("/addcar", checkAdmin, function (req,res) {
   });
 });
 
+// car more details
+router.get("/cardetail/:id", checkAdmin, function (req, res) {
+  Cars.findById(req.params._id, function (car, error) {
+    if (error) res.render("error", {error: error});
+    else if (car) {
+      res.render("cardetail", {car: car});
+    } else {
+      res.render("cardetail", {error_msg: "voiture no valable"});
+    }
+  });
+});
+
+//router.post("/cardetail/:id", checkAdmin, function (req, res) {
+
+//});
+
 // deconnect
 router.get("/logoff", function (req, res) {
   req.session.destroy();
