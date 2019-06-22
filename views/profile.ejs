@@ -170,46 +170,44 @@
           </div>
           </div>
         </div>
-      <section style="margin-top:20px;"id="invitations">
-        <div class="row">
-
-        <div class="col-sm">
-
-     </div>
-     <div class="col-sm">
-           <h2 class="text-center font-weight-normal"style="color:#112D4E;padding-bottom:40px;padding-top:80px;"> Invitations </h2>
-             <% if(typeof reservations != 'undefined' && reservations != '') { %>
+        <section style="margin-top:20px;"id="invitations">
+          <h2 class="text-center font-weight-normal"style="color:#112D4E;padding-bottom:40px;padding-top:80px;"> Invitations </h2>
+          <div class="row">
+<% if(typeof reservations != 'undefined' && reservations != '') { %>
                <% reservations.reverse() %>
-							 <% reservations.forEach(function(res) { %>
-       <div class="card" style="width: ;display:inline-block;height:">
-         <div class="card-body">
+              <% reservations.forEach(function(res) { %>
+         <div class="card" style="width: ;display:inline-block;height:">
+           <div class="card-body">
+           <div class="container">
+             <h4 style="padding:20px;"><a  style="color:#3f72af" href="/detail/= res.reserverid"><%= res.reservername%></a> s'est intéressé de votre trajet</h4>
 
-            <h3 style="padding:20px;"><a  style="color:#3f72af" href="/detail/<%= res.reserverid %>"><%= res.reservername %></a> s'est intéressé de votre trajet</h3>
-           <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">DE:</strong><%= res.depart %><strong style="margin-right:10px;margin-left:30px;">VERS:</strong> <%= res.destination %></h4>
-               <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">LE:</strong>  <%= res.date %></h4>
-
-
-
-<% if (res.reserved == false) { %>
-             <div style="padding-top:;"class="" id="<%= res._id %>">
-               <button style="margin-top:30px;margin-bottom:20px;background-color:#3F72AF;"type="submit" class="btn" onclick="accepter('<%= res._id %>','<%= res.trajetid %>')">Accepter l'invitation</button>
+             <div class="row">
+               <div class="col-sm">
+               <h5 style=""><strong style="margin-right:10px;">DE:</strong><%= res.depart%></h5>
+               </div>
+               <div class="col-sm">
+               <h5 style=""><strong style="margin-right:10px;">VERS:</strong><%=  res.destination%></h5>
+               </div>
+               <div class="col-sm">
+               <h5 style=""><strong style="margin-right:10px;">LE:</strong><%= res.date%></h5>
+               </div>
+             </div>
            </div>
+           <% if (res.reserved == false) { %>
+               <div style="padding-top:;"class="" id="= res._id">
+                 <button style="margin-top:30px;margin-bottom:20px;background-color:#3F72AF;font-size: 70%;"type="submit" class="btn" onclick="submit">Accepter l'invitation</button>
+             </div>
+             <% } else { %>
+  						 <h3 class="text-center font-weight-normal"style="color:#112D4E;padding-bottom:180px;padding-top:100px;"> vous avez accepté cette invitations</h3>
+  						 <% }; %>
+        </div>
+        </div>
+        	<% })} else { %>  <h3 class="text-center font-weight-normal"style="color:#112D4E;padding-bottom:180px;padding-top:100px;width: 100%;">  vous n'avez pas d'invitations<h3> <% } %>
+        </div>
 
 
-					 <% } else { %>
-						 <h3 class="text-center font-weight-normal"style="color:#112D4E;padding-bottom:180px;padding-top:100px;"> vous avez accepté cette invitations</h3>
-						 <% }; %>
-     </div>
-     </div>
-					<% })} else { %>  <h3 class="text-center font-weight-normal"style="color:#112D4E;padding-bottom:180px;padding-top:100px;">  vous n'avez pas d'invitations<h3> <% } %>
-     </div>
-     <div class="col-sm">
+        </section>
 
-     </div>
-
-
-      </div>
-      </section>
 
 
 </section>

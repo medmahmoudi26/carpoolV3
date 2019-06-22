@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" href="../assets/img/.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    profile
+    details
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -52,90 +52,90 @@
             <div class="card-title text-center">
 
           </div>
-            <div class="card-body">
-              <div class="row">
-                <% if (typeof user != 'undefined') { %>
-                <div class="col-md-5 ml-auto">
+          <div class="card-body">
+            <div class="row">
+              <% if (typeof user != 'undefined') { %>
+              <div class="col-md-5 ml-auto">
 
-                  <form class="form" method="" autocomplete="off" action="">
-                    <div class="form-group">
-                      <div class="input-group"style="margin-bottom:50px;" >
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">
-                            <i class="material-icons">face</i>
-                          </span>
-                        </div>
-                         <h4 style="margin-left:20px;margin-right:20px;"><strong style="margin-right:10px;">Nom:</strong><%= user.nom %><h4>
+                <form class="form" method="" autocomplete="off" action="">
+                  <div class="form-group">
+                    <div class="input-group"style="margin-bottom:50px;" >
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="material-icons">face</i>
+                        </span>
                       </div>
+                       <h4 style="margin-left:20px;margin-right:20px;"><strong style="margin-right:10px;">Nom:</strong><%= user.nom %><h4>
                     </div>
-                    <div class="form-group">
-                      <div class="input-group" style="margin-bottom:50px;">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">
-                            <i class="material-icons">face</i>
-                          </span>
-                        </div>
-                                               <h4 style="margin-left:20px;margin-right:20px;"><strong style="margin-right:10px;">Prenom:</strong>	<%= user.prenom %><h4>
+                  </div>
+                  <div class="form-group">
+                    <div class="input-group" style="margin-bottom:50px;">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="material-icons">face</i>
+                        </span>
                       </div>
+                                             <h4 style="margin-left:20px;margin-right:20px;"><strong style="margin-right:10px;">Prenom:</strong>	<%= user.prenom %><h4>
                     </div>
-                    <div class="form-group">
-                      <div class="input-group" style="margin-bottom:50px;">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">
-                            <i class="material-icons">mail</i>
-                          </span>
-                        </div>
-                        <h4 style="margin-left:20px;margin-right:20px;"><strong style="margin-right:10px;">E-mail:</strong><%= user.email %><h4>
+                  </div>
+                  <div class="form-group">
+                    <div class="input-group" style="margin-bottom:50px;">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="material-icons">mail</i>
+                        </span>
                       </div>
+                      <h4 style="margin-left:20px;margin-right:20px;"><strong style="margin-right:10px;">E-mail:<br></strong><%= user.email %><h4>
                     </div>
+                  </div>
 
 
-                  </form>
+                </form>
 
-                </div>
-                <div class="col-md-5 mr-auto">
-
-                  <form class="form" method=""autocomplete="off" action="">
-                    <div class="form-group ">
-                      <div class="input-group" style="margin-bottom:50px;">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">
-                            <i class="material-icons">date_range</i>
-                          </span>
-                        </div>
-                        <h4 style="margin-left:20px;margin-right:20px;"><strong style="margin-right:10px;">année de naissance:</strong>	<%= user.year %><h4>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="input-group" style="margin-bottom:50px;">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">
-                            <i class="material-icons">phone</i>
-                          </span>
-                        </div>
-                        <h4 style="margin-left:20px;margin-right:20px;"><strong style="margin-right:10px;">num de teléphone:</strong>	<%= user.number %><h4>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="input-group" style="margin-bottom:50px;">
-
-
-                            <div class="input-group-prepend">
-                              <span class="input-group-text ">
-                                <i class="material-icons">link</i>
-                              </span>
-                            </div>
-                            <h4 style="margin-left:20px;margin-right:20px;"><strong style="margin-right:10px;">lien du facebook:</strong>	<%= user.facebook %><h4>
-
-                      </div>
-                    </div>
-
-
-                    </div>
-                  </form>
-                  <% } %>
-                </div>
               </div>
+              <div class="col-md-5 mr-auto">
+
+                <form class="form" method=""autocomplete="off" action="">
+                  <div class="form-group ">
+                    <div class="input-group" style="margin-bottom:50px;">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="material-icons">date_range</i>
+                        </span>
+                      </div>
+                      <h4 style="margin-left:20px;margin-right:20px;"><strong style="margin-right:10px;">année de naissance:</strong>	<%= user.year %><h4>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="input-group" style="margin-bottom:50px;">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="material-icons">phone</i>
+                        </span>
+                      </div>
+                      <h4 style="margin-left:20px;margin-right:20px;"><strong style="margin-right:10px;">num de teléphone:</strong>	<%= user.number %><h4>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="input-group" style="margin-bottom:50px;">
+
+
+                          <div class="input-group-prepend">
+                            <span class="input-group-text ">
+                              <i class="material-icons">link</i>
+                            </span>
+                          </div>
+                          <h4 style="margin-left:20px;margin-right:20px;"><strong style="margin-right:10px;">lien du facebook:</strong>	<%= user.facebook %><h4>
+
+                    </div>
+                  </div>
+
+
+                  </div>
+                </form>
+                <% } %>
+              </div>
+            </div>
             </div>
                         <div class="card-title text-center"style="margin-bottom:2%;">
 
