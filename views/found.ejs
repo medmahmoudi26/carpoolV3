@@ -30,13 +30,14 @@
   <div class="main "style="margin-left:50px;margin-right:50px;">
     <div class="profile-content">
       <div class="container">
+        <h2 class="text-center font-weight-normal"style="color:#112D4E;padding-bottom:40px;padding-top:40px; text-align:center;"> Resultats <h2>
+
         <div class="row">
 
         <div class="col-sm">
 
      </div>
      <div class="col-sm">
-           <h2 class="text-center font-weight-normal"style="color:#112D4E;padding-bottom:40px;padding-top:40px;"> Resultats <h2>
         <% if (allant != ''){%>
           <h3>Partant de <%= request.depart %> vers <%= request.dest %></h3>
           <% allant.forEach(function(usr) { %>
@@ -47,7 +48,7 @@
                   <h5 style="padding:20px;"> <a style="color:#3f72af" href="/detail/<%= usr.userid %>" target="blank"><%= usr.nom %> <%= usr.prenom %> part </a> </h5>
 
                   <div class="col-sm">
-                      <h5 style=""><strong style="margin-right:10px;">De:</strong><%=usr.depart</h5>
+                      <h5 style=""><strong style="margin-right:10px;">De:</strong><%=usr.depart %></h5>
                         <h5 style=""><strong style="margin-right:10px;">Heure:</strong><%=usr.allezTime %></h5>
 
                   </div>
@@ -85,7 +86,7 @@
                 <h5 style="padding:20px;"> <a style="color:#3f72af" href="/detail/<%= usr.userid %>" target="blank"><%= usr.nom %> <%= usr.prenom %> part </a> </h5>
 
                 <div class="col-sm">
-                    <h5 style=""><strong style="margin-right:10px;">De:</strong><%=usr.depart</h5>
+                    <h5 style=""><strong style="margin-right:10px;">De:</strong><%=usr.depart %></h5>
                       <h5 style=""><strong style="margin-right:10px;">Heure:</strong><%=usr.allezTime %></h5>
 
                 </div>
@@ -125,7 +126,7 @@
                   <h5 style="padding:20px;"> <a style="color:#3f72af" href="/detail/<%= usr.userid %>" target="blank"><%= usr.nom %> <%= usr.prenom %> part </a> </h5>
 
                   <div class="col-sm">
-                      <h5 style=""><strong style="margin-right:10px;">De:</strong><%=usr.depart</h5>
+                      <h5 style=""><strong style="margin-right:10px;">De:</strong><%=usr.depart %></h5>
                         <h5 style=""><strong style="margin-right:10px;">Heure:</strong><%=usr.allezTime %></h5>
 
                   </div>
