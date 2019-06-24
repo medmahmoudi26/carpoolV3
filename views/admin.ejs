@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" href="../assets/img/.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    profile
+    Admin
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -110,19 +110,32 @@
 
           </div>
 
-          <div class="col-md-8 ml-auto mr-auto">
+          <div class="col-md-10 ml-auto mr-auto">
 
           <% trajets.forEach(function(trajet) { %>
           <div class="card" style="width: ;display:inline-block;height:">
             <div class="card-body">
+              <div class="container">
+                 <h5 style="padding-left:20px;"><a href="/detail/<%= trajet.userid %>" target="black"><%= trajet.nom %> <%= trajet.prenom %></a> a proposé un trajet</h5>
+      <div class="row">
+      <div class="col-sm">
+      <h5 style="min-height:55px;"><strong style="margin-right:10px;">De:</strong> <%= trajet.depart %></h5>
+      <h5 style="min-height:55px;"><strong style="margin-right:10px;">Heure:</strong> <%= trajet.allezTime %></h5>
+       <h5 style="min-height:55px;"><strong style="margin-right:10px;">Nombre de Places:</strong><%= trajet.places %></h5>
 
-               <h3 style="padding:20px;"><a href="/detail/<%= trajet.userid %>" target="black"><%= trajet.nom %> <%= trajet.prenom %></a> a proposé un trajet</h3>
-              <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">De:</strong> <%= trajet.depart %><strong style="margin-right:10px;margin-left:30px;">Vers:</strong><%= trajet.dest %></h4>
-                <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Le:</strong> <%= trajet.allezDate %><strong style="margin-right:10px;margin-left:30px;">Heure:</strong><%= trajet.allezTime %></h4>
-                <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Etape:</strong><%= trajet.etape %>%><strong style="margin-right:10px;margin-left:30px;">Véhicule:</strong> <%= trajet.car %></h4>
-                <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">  Places:</strong> <%= trajet.places %><h4>
+      </div>
+      <div class="col-sm">
+      <h5 style="min-height:55px;"><strong style="margin-right:10px;">Vers:</strong> <%= trajet.dest %></h5>
+      <h5 style="min-height:55px;"><strong style="margin-right:10px;">Etape:</strong><%= trajet.etape %></h5>
+      <h5 style="min-height:55px;"><strong style="margin-right:10px;">Description:</strong><%= trajet.description %></h5>
+      </div>
+      <div class="col-sm">
 
-                  <h4 style="margin-left:20px;margin-right:20px;margin-top:20px;margin-bottom:50px;"><strong style="margin-right:10px;">Description:</strong> <%= trajet.description %><h4>
+                  <h5 style="min-height:55px;"><strong style="margin-right:10px;">Le:</strong><%= trajet.allezDate %></h5>
+                    <h5 style="min-height:55px;"><strong style="margin-right:10px;">Véhicule:</strong><%= trajet.car %></h5>
+      </div>
+      </div>
+      </div>
 
         </div>
           </div>
