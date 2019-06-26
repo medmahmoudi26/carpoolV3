@@ -344,7 +344,7 @@ margin-bottom: 30px;
   </script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    var socket = io.connect("http://s2ec2s76f.de-02.live-paas.net/");
+    var socket = io.connect("http://41.226.158.220/");
     function reserve(trajetid,destination,depart,date,proposerid,proposername,reserverid,reservername) {
       socket.emit('reserver', {trajetid:trajetid,destination:destination,depart:depart,date:date,proposerid:proposerid,proposername:proposername,reserverid:reserverid,reservername:reservername});
     }

@@ -173,12 +173,25 @@ io.sockets.on('connection', function(socket){
       var id = car.id;
       var mat = car.mat;
       var model = car.model;
-      var lastVersionDate = car.lastVersion;
-      var fisrtUsageDate = car.firstUsage;
+      var energie = car.energie;
+      var firstUsageDate = car.firstUsage;
       var parcEntreeDate = car.parcEntree;
       var lastControleDate = car.lastControle;
+      var doors = car.doors;
+      var places = car.places;
       console.log("Updating car");
-      cars.findOneAndUpdate({_id: id},{$set:{mat:mat, model:model}}, {new: true}, function (error, updated) {
+      cars.findOneAndUpdate({_id: id},{$set:
+        {
+          mat              : mat,
+          model            : model,
+          energie          : energie,
+          firstUsageDate   : firstUsageDate,
+          parcEntreeDate   : parcEntreeDate,
+          lastControleDate : lastControleDate,
+          doors            : doors,
+          places           : places
+        }},
+        {new: true}, function (error, updated) {
         if (error) socket.emit("error", error);
         else socket.emit('updated', updated._id)
       });

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Car details</title>
+  </head>
+  <body>
+    <% include ./partials/messages.ejs %>
+    <form target="/admin/cardetail/<%= car._id %>" method="post">
+      <input type="text" name="mat" value="<%= car.mat%>">
+    </form>
+  </body>
+</html>

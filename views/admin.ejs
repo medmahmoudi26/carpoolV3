@@ -83,18 +83,25 @@
                 <div class="row"style="margin-top:5%;" id="<%= car._id %>">
 
                   <div class="col-4">
-                <input type="text"class="form-control" id="mat-<%= car._id %>" value=<%=car.mat%>>
-                <input type="text"class="form-control" id="model-<%= car._id %>" value=<%=car.model%>>
+                <input type="text"class="form-control" id="mat-<%= car._id %>" value=<%=car.mat%>
+                <input type="text"class="form-control" id="marque-<%= car._id %>" value=<%=car.marque%>
+                <input type="text"class="form-control" id="energie-<%= car._id %>" value=<%=car.energie%>
                 <div id="updated-<%= car._id %>">
                 </div>
               </div>
               <div class="col-4">
                   <div id="updated-<%= car._id %>">
-            <input type="text"class="form-control" id="mat-<%= car._id %>" value=<%=car.mat%>>
-            <input type="text"class="form-control" id="model-<%= car._id %>" value=<%=car.model%>>
-
+            <input type="text"class="form-control" id="firstUsageDate-<%= car._id %>" value=<%=car.firstUsageDate%>
+            <input type="text"class="form-control" id="parcEntreeDate-<%= car._id %>" value=<%=car.parcEntreeDate%>
+            <input type="text"class="form-control" id="lastControleDate-<%= car._id %>" value=<%=car.lastControleDate%>
             </div>
           </div>
+          <div class="col-4">
+        <input type="text"class="form-control" id="doors-<%= car._id %>" value=<%=car.doors%>
+        <input type="text"class="form-control" id="places-<%= car._id %>" value=<%=car.places%>
+        <div id="updated-<%= car._id %>">
+        </div>
+      </div>
               <div class="col-4 text-center"style="">
                 <button type="button" style="background-color:#3F72AF;"class="btn" name="del" onclick="del('<%= car._id %>');">Delete</button>
                 <button type="button" style="background-color:#3F72AF;" class="btn" name="update" onclick="update('<%= car._id %>')">Update</button>
@@ -199,7 +206,7 @@ margin-bottom: 30px;
 </footer>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  var socket = io.connect("http://localhost:80");
+  var socket = io.connect("http://41.226.158.220:80");
   function update(id) {
     var mat = document.getElementById('mat-'+id).value;
     var model = document.getElementById('model-'+id).value;
