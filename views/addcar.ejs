@@ -87,7 +87,7 @@
               <div class="row">
 
                 <div class="col-md-4 ml-auto">
-                  <form class="form" method="post" autocomplete="off" action="/user/register">
+                  <form class="form" method="post" autocomplete="off" action="/admin/addcar">
                     <div class="form-group">
                       <div class="input-group">
                         <div class="input-group-prepend">
@@ -111,7 +111,16 @@
                         <div class="input-group-prepend">
 
                         </div>
-                        <input type="number" name="places" class="form-control"id="places" placeholder="places...">
+                        <input type="number" name="places" class="form-control"id="places" placeholder="places..." required>
+
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+
+                        </div>
+                        <input type="number" name="doors" class="form-control"id="doors" placeholder="doors..." required>
 
                       </div>
                     </div>
@@ -152,18 +161,15 @@
                       </div>
                     </div>
 
-                  </form>
                 </div>
                 <div class="col-md-4 ml-auto">
-                  <form class="form" method="post" autocomplete="off" action="/user/register">
-
 
                     <div class="form-group">
                       <div class="input-group">
                         <div class="input-group-prepend">
 
                         </div>
-                        <input type="text" name="firstUsageDate" class="form-control datetimepicker"id='datetimepicker' placeholder="firstUsageDate...">
+                        <input type="text" name="firstUsageDate" class="form-control datetimepicker"id='datetimepicker' placeholder="firstUsageDate..." required>
 
                       </div>
                     </div>
@@ -172,7 +178,7 @@
                         <div class="input-group-prepend">
 
                         </div>
-                        <input type="text" name="parcEntreeDate" class="form-control datetimepicker"id='datetimepicker' placeholder="parcEntreeDate...">
+                        <input type="text" name="parcEntreeDate" class="form-control datetimepicker"id='datetimepicker' placeholder="parcEntreeDate..." required>
 
                       </div>
                     </div>
@@ -181,7 +187,7 @@
                         <div class="input-group-prepend">
 
                         </div>
-                        <input type="text" name="lastControleDate" class="form-control datetimepicker"id='datetimepicker' placeholder="lastControleDate...">
+                        <input type="text" name="lastControleDate" class="form-control datetimepicker"id='datetimepicker' placeholder="lastControleDate..." required>
 
                       </div>
                     </div>
@@ -190,7 +196,7 @@
                         <div class="input-group-prepend">
 
                         </div>
-                        <input type="text" name="v" class="form-control"id="marque" placeholder="marque...">
+                        <input type="text" name="v" class="form-control"id="marque" placeholder="marque..." required>
 
                       </div>
                     </div>
@@ -217,17 +223,14 @@
                         <div class="input-group-prepend">
 
                         </div>
-                        <input type="text" name="energie" class="form-control"id="energie" placeholder="energie...">
+                        <input type="text" name="energie" class="form-control"id="energie" placeholder="energie..." required>
 
                       </div>
                     </div>
-
-                    </form>
+                  
                 </div>
 
                 <div class="col-md-4 ml-auto">
-                  <form class="form" method="post" autocomplete="off" action="/user/register">
-
 
                     <div class="form-group">
                       <div class="input-group">
@@ -294,8 +297,6 @@
                       </div>
                     </div>
 
-
-                    </form>
                 </div>
 
             </div>

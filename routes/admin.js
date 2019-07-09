@@ -73,11 +73,37 @@ router.get("/addcar", checkAdmin, function (req, res) {
 
 router.post("/addcar", checkAdmin, function (req,res) {
     Cars.create({
-      mat:            req.body.mat,
-      model:          req.body.model,
-      places:         req.body.places,
-      etablissement:  req.body.etablissement,
-      remarque:       req.body.remarque
+      mat: req.body.mat,
+      places: req.body.places,
+      lastVersionDate: req.body.lastVersionDate,
+      firstUsageDate: req.body.firstUsageDate,
+      parcEntreeDate: req.body.parcEntreeDate,
+      lastControleDate: req.body.lastControleDate,
+      marque: req.body.marque,
+      modele: req.body.modele,
+      finition: req.body.finition,
+      vin: req.body.vin,
+      carrosserie: req.body.carrosserie,
+      energie: req.body.energie,
+      genre: req.body.genre,
+      type: req.body.type,
+      doors: req.body.doors,
+      capacity: req.body.capacity,
+      consoMixte: req.body.consoMixte,
+      CO2: req.body.CO2,
+      puissance: req.body.puissance,
+      puissanceFasc: req.body.puissanceFasc,
+      pneumatique: req.body.pneumatique,
+      garnissage: req.body.garnissage,
+      color: req.body.color,
+      options: req.body.options,
+      accessoires: req.body.accessoires,
+      amenagement: req.body.amenagement,
+      boite: req.body.boite,
+      LocalisationCertImmat: req.body.LocalisationCertImmat,
+      signalétique: req.body.signalétique,
+      remarque: req.body.remarque,
+      etablissement: req.body.etablissement
   },function (error, car) {
     if (error) {
       req.flash("error_msg","une erreur s'est produite");
