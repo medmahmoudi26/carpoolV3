@@ -93,22 +93,22 @@
                 <div class="row"style="margin-top:5%;" id="<%= car._id %>">
 
                   <div class="col-4">
-                <input type="text"class="form-control" id="mat-<%= car._id %>" value=<%=car.mat%>
-                <input type="text"class="form-control" id="marque-<%= car._id %>" value=<%=car.marque%>
-                <input type="text"class="form-control" id="energie-<%= car._id %>" value=<%=car.energie%>
+                <input type="text"class="form-control" id="mat-<%= car._id %>" value='<%=car.mat%>' placeholder="Immatricule">
+                <input type="text"class="form-control" id="marque-<%= car._id %>" value='<%=car.marque%>' placeholder="Marque">
+                <input type="text"class="form-control" id="energie-<%= car._id %>" value='<%=car.energie%>' placeholder="Energie">
                 <div id="updated-<%= car._id %>">
                 </div>
               </div>
               <div class="col-4">
                   <div id="updated-<%= car._id %>">
-            <input type="text"class="form-control" id="firstUsageDate-<%= car._id %>" value=<%=car.firstUsageDate%>
-            <input type="text"class="form-control" id="parcEntreeDate-<%= car._id %>" value=<%=car.parcEntreeDate%>
-            <input type="text"class="form-control" id="lastControleDate-<%= car._id %>" value=<%=car.lastControleDate%>
+            <input type="text"class="form-control" id="firstUsageDate-<%= car._id %>" value='<%=car.firstUsageDate%>' placeholder="Date de premiere mise en circulation">
+            <input type="text"class="form-control" id="parcEntreeDate-<%= car._id %>" value='<%=car.parcEntreeDate%>' placeholder="Date d'entrée dans le parc">
+            <input type="text"class="form-control" id="lastControleDate-<%= car._id %>" value='<%=car.lastControleDate%>' placeholder="Date du dernier controle technique">
             </div>
           </div>
           <div class="col-4">
-        <input type="text"class="form-control" id="doors-<%= car._id %>" value=<%=car.doors%>
-        <input type="text"class="form-control" id="places-<%= car._id %>" value=<%=car.places%>
+        <input type="number"class="form-control" id="doors-<%= car._id %>" value='<%=car.doors%>' placeholder="Nombres de portes">
+        <input type="number"class="form-control" id="places-<%= car._id %>" value='<%=car.places%>' placeholder="Nombre de places">
         <div id="updated-<%= car._id %>">
         </div>
       </div>
@@ -216,12 +216,17 @@ margin-bottom: 30px;
 </footer>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  var socket = io.connect("http://41.226.158.220:80");
+  var socket = io.connect("http://localhost");
   function update(id) {
     var mat = document.getElementById('mat-'+id).value;
-    var model = document.getElementById('model-'+id).value;
+    var energie = document.getElementById('energie-'+id).value;
+    var firstUsageDate = document.getElementById('firstUsageDate-'+id).value;
+    var parcEntreeDate = document.getElementById('parcEntreeDate-'+id).value;
+    var lastControleDate = document.getElementById('lastControleDate-'+id).value;
+    var doors = document.getElementById('doors-'+id).value;
+    var places = document.getElementById('places-'+id).value;
     console.log('emitting');
-    socket.emit('update', {id: id, mat: mat, model: model});
+    socket.emit('update', {id: id, mat: mat, energie: energie, firstUsageDate: firstUsageDate, parcEntreeDate: parcEntreeDate, lastControleDate: lastControleDate, doors: doors, places: places});
   }
   function del(id) {
     socket.emit('delete', id);
