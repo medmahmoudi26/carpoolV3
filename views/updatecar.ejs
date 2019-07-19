@@ -87,257 +87,96 @@
               <div class="row">
 
                 <div class="col-md-4 ml-auto">
-                  <form class="form" method="post" autocomplete="off" action="/user/register">
+                  <form class="form" method="post" autocomplete="off" action="/admin/updatecar">
+				  
                     <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-
-                        </div>
-                        <label class="label" for="exampleFormControlInput1">mat</label><br>
-
-                        <input type="text" name="mat" value="<%= car.mat %>" class="form-control"id="mat" placeholder="..."required="true">
-
-                      </div>
+                        <label for="exampleFormControlInput1" class="label">Matricule</label>
+                        <input type="text" name="mat" value="<%= car.mat %>" class="form-control" id="mat" placeholder="..." required="true">
                     </div>
+					
                     <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-
-                        </div>
-                        <label class="label" for="exampleFormControlInput1">model</label><br>
-
-                        <input type="text" name="model" value="<%= car.model %>" class="form-control"id="model" placeholder="...">
-
-                      </div>
+                        <label class="label" for="exampleFormControlInput1">Places</label>
+                        <input type="number" name="places" value="<%= car.places %>" class="form-control" id="places" placeholder="...">
                     </div>
+					
                     <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-
-                        </div>
-                        <label class="label" for="exampleFormControlInput1">places</label><br>
-
-                        <input type="number" name="places" value="<%= car.places %>" class="form-control"id="places" placeholder="...">
-
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-
-                        </div>
-                        <label class="label" for="exampleFormControlInput1">lastVersionDate</label><br>
-
+                        <label class="label" for="exampleFormControlInput1">Dernière date de version</label>
                         <input type="text" name="lastVersionDate" value="<%= car.lastVersionDate %>" class="form-control datetimepicker"id='datetimepicker' placeholder="...">
-                      </div>
                     </div>
 
                     <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-
-                        </div>
-                        <label class="label" for="exampleFormControlInput1">finition</label><br>
-
+                        <label class="label" for="exampleFormControlInput1">Finition</label>
                         <input type="text" name="finition" value="<%= car.finition %>" class="form-control"id="finition" placeholder="...">
-
-                      </div>
                     </div>
                     <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-
-                        </div>
-                        <label class="label" for="exampleFormControlInput1">vin</label><br>
-
-                        <input type="text" name="vin" value="<%= car.vin %>" class="form-control"id="vin" placeholder="...">
-
-                      </div>
+                        <label class="label" for="exampleFormControlInput1">VIN</label>
+                        <input type="text" name="vin" value="<%= car.vin %>" class="form-control"id="vin" placeholder="Entrer Plaque d'immatriculation">
                     </div>
                     <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-
-                        </div>
-                        <label class="label" for="exampleFormControlInput1">carrosserie</label><br>
-
+                        <label class="label" for="exampleFormControlInput1">Carrosserie</label>
                         <input type="text" name="carrosserie" value="<%= car.carrosserie %>" class="form-control"id="carrosserie" placeholder="...">
-
-                      </div>
                     </div>
 
                   </form>
                 </div>
                 <div class="col-md-4 ml-auto">
-                  <form class="form" method="post" autocomplete="off" action="/user/register">
-
-
+				
                     <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-
-                        </div>
-                        <label class="label" for="exampleFormControlInput1">firstUsageDate</label><br>
-
-                        <input type="text" name="firstUsageDate" class="form-control datetimepicker"id='datetimepicker' placeholder="...">
-
-                      </div>
+                        <label class="label" for="exampleFormControlInput1">Première date d'utilisation</label>
+                        <input type="text" name="firstUsageDate" value="<%= car.firstUsageDate %>" class="form-control datetimepicker" id='datetimepicker' placeholder="...">
                     </div>
                     <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-
-                        </div>
-                        <label class="label" for="exampleFormControlInput1">parcEntreeDate</label><br>
-
-                        <input type="text" name="parcEntreeDate" class="form-control datetimepicker"id='datetimepicker' placeholder="...">
-
-                      </div>
+                        <label class="label" for="exampleFormControlInput1">parcEntreeDate</label>
+                        <input type="text" name="parcEntreeDate" value="<%= car.parcEntreeDate %>" class="form-control datetimepicker" id='datetimepicker' placeholder="...">
                     </div>
                     <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-
-                        </div>
-                        <label class="label" for="exampleFormControlInput1">lastControleDate</label><br>
-
-                        <input type="text" name="lastControleDate" class="form-control datetimepicker"id='datetimepicker' placeholder="...">
-
-                      </div>
+                        <label class="label" for="exampleFormControlInput1">Date du dernier contrôle</label>
+                        <input type="text" name="lastControleDate" value="<%= car.lastControleDate %>" class="form-control datetimepicker" id='datetimepicker' placeholder="...">
                     </div>
                     <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-
-                        </div>
-                        <label class="label" for="exampleFormControlInput1">marque</label><br>
-
-                        <input type="text" name="v" class="form-control"id="marque" placeholder="...">
-
-                      </div>
+                        <label class="label" for="exampleFormControlInput1">Marque</label>
+                        <input type="text" name="v" value="<%= car.v %>" class="form-control" id="marque" placeholder="...">
                     </div>
                     <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-
-                        </div>
-                        <label class="label" for="exampleFormControlInput1">modele</label><br>
-
-                        <input type="text" name="modele" class="form-control"id="modele" placeholder="...">
-
-                      </div>
+                        <label class="label" for="exampleFormControlInput1">Modele</label>
+                        <input type="text" name="modele" value="<%= car.modele %>" class="form-control" id="modele" placeholder="...">
                     </div>
                     <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-
-                        </div>
-                        <label class="label" for="exampleFormControlInput1">etablissement</label><br>
-
-                        <input type="text" name="etablissement" class="form-control"id="etablissement" placeholder="...">
-
-                      </div>
+                        <label class="label" for="exampleFormControlInput1">Etablissement</label>
+                        <input type="text" name="etablissement" value="<%= car.etablissement %>" class="form-control"id="etablissement" placeholder="...">
                     </div>
-                    <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-
-                        </div>
-                        <label class="label" for="exampleFormControlInput1">energie</label><br>
-
-                        <input type="text" name="energie" class="form-control"id="energie" placeholder="...">
-
-                      </div>
-                    </div>
-
-                    </form>
                 </div>
-
+				<!-- 3rd COL -->
                 <div class="col-md-4 ml-auto">
-                  <form class="form" method="post" autocomplete="off" action="/user/register">
-
-
+				
                     <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-
-                        </div>
-                        <label class="label" for="exampleFormControlInput1">energie</label><br>
-
-                        <input type="text" name="energie" class="form-control"id="energie" placeholder="...">
-
-                      </div>
+                        <label class="label" for="exampleFormControlInput1">Energie</label>
+                        <input type="text" name="energie" value="<%= car.energie %>" class="form-control" id="energie" placeholder="...">
+                    </div>
+					
+                    <div class="form-group">
+                        <label class="label" for="exampleFormControlInput1">Genre</label>
+                        <input type="text" name="genre" value="<%= car.genre %>" class="form-control" id="genre" placeholder="...">
+                    </div>
+					
+                    <div class="form-group">
+                        <label class="label" for="exampleFormControlInput1">Type</label>
+                        <input type="text" name="type" value="<%= car.type %>" class="form-control"id="type" placeholder="...">
                     </div>
                     <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-
-                        </div>
-                        <label class="label" for="exampleFormControlInput1">genre</label><br>
-
-                        <input type="text" name="genre" class="form-control"id="genre" placeholder="...">
-
-                      </div>
+                        <label class="label" for="exampleFormControlInput1">Consommation Mixte</label>
+                        <input type="text" name="consoMixte" value="<%= car.consoMixte %>" class="form-control" id="consoMixte" placeholder="...">
+                    </div>
+					
+                    <div class="form-group">
+                        <label class="label" for="exampleFormControlInput1">CO2</label>
+                        <input type="text" name="CO2" value="<%= car.CO2 %>" class="form-control" id="CO2" placeholder="...">
                     </div>
                     <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-
-                        </div>
-                        <label class="label" for="exampleFormControlInput1">type</label><br>
-
-                        <input type="text" name="type" class="form-control"id="type" placeholder="...">
-
-                      </div>
+                        <label for="exampleFormControlInput1">Remarque</label>
+                        <textarea class="form-control" value="<%= car.lastControleDate %>" id="exampleFormControlTextarea1" rows="3" placeholder="votre remarque ici ..."></textarea>
                     </div>
-                    <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-
-                        </div>
-                        <label class="label" for="exampleFormControlInput1">capacity</label><br>
-
-                        <input type="text" name="prenom" class="form-control"id="prenom" placeholder="...">
-
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-
-                        </div>
-                        <label class="label" for="exampleFormControlInput1">consoMixte</label><br>
-
-                        <input type="text" name="consoMixte" class="form-control"id="consoMixte" placeholder="...">
-
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-
-                        </div>
-                        <label class="label" for="exampleFormControlInput1">CO2</label><br>
-
-                        <input type="text" name="CO2" class="form-control"id="CO2" placeholder="...">
-
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-
-                        </div>
-                        <label class="label" for="exampleFormControlInput1">remarque</label><br>
-
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"placeholder="..."></textarea>
-
-
-                      </div>
-                    </div>
-
-
-                    </form>
+					
                 </div>
 
             </div>
@@ -347,7 +186,7 @@
 							</div>
 
 								<br>
-								<input id="valider" style="margin-top:40px;margin-bottom:20px;background-color:#3F72AF;" type="update" class="btn" name="update">
+								<input id="valider" style="margin-top:40px;margin-bottom:20px;background-color:#3F72AF;" type="update" class="btn" name="update" value="Sauvgarder">
 							</div>
 						</form>
           </div>
