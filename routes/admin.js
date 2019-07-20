@@ -131,12 +131,12 @@ router.post("/addcar", checkAdmin, function (req,res) {
 
 // car more details
 router.get("/cardetail/:id", checkAdmin, function (req, res) {
-  Cars.findById(req.params.id, function (car, error) {
-    if (error) res.render("error", {error: error});
+  Cars.findById(req.params.id, function (error, car) {
+    if (error) res.render("error", {error: 'car not found'});
     else if (car) {
-      res.render("cardetail", {car: car});
+      res.render("updatecar", {car: car});
     } else {
-      res.render("cardetail", {error_msg: "voiture no valable"});
+      res.render("updatecar", {error_msg: "voiture no valable"});
     }
   });
 });

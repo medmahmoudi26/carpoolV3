@@ -112,9 +112,10 @@
         <div id="updated-<%= car._id %>">
         </div>
       </div>
-              <div class="col-4 text-center"style="">
+              <div class="col-6 text-center"style="">
                 <button type="button" style="background-color:#3F72AF;"class="btn" name="del" onclick="del('<%= car._id %>');">Delete</button>
                 <button type="button" style="background-color:#3F72AF;" class="btn" name="update" onclick="update('<%= car._id %>')">Update</button>
+                <a href="/admin/cardetail/<%= car._id %>"<button type="button" style="background-color:#3F72AF;" class="btn" name="update" >More</button></a>
                 </div>
 
               </div>
