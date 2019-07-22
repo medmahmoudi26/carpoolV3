@@ -92,23 +92,54 @@
 
                 <div class="row"style="margin-top:5%;" id="<%= car._id %>">
 
-                  <div class="col-4">
-                <input type="text"class="form-control" id="mat-<%= car._id %>" value='<%=car.mat%>' placeholder="Immatricule">
-                <input type="text"class="form-control" id="marque-<%= car._id %>" value='<%=car.marque%>' placeholder="Marque">
-                <input type="text"class="form-control" id="energie-<%= car._id %>" value='<%=car.energie%>' placeholder="Energie">
-                <div id="updated-<%= car._id %>">
-                </div>
+                 <div class="col-4">
+				 
+					<div class="form-group">
+						<label class="label">Immatricule</label>
+						<input type="text" id="mat-<%= car._id %>" value="<%=car.mat%>" class="form-control" placeholder="Immatricule">
+					</div>					
+					
+					<div class="form-group">
+						<label class="label">Marque</label>
+						<input type="text" id="marque-<%= car._id %>" value="<%=car.marque%>" class="form-control" placeholder="Marque">
+					</div>
+					
+					<div class="form-group">
+						<label class="label">Energie</label>
+						<input type="text" id="energie-<%= car._id %>" value="<%=car.energie%>" class="form-control" placeholder="Energie">
+					</div>
+					
+					<div id="updated-<%= car._id %>">
+					</div>
               </div>
               <div class="col-4">
                   <div id="updated-<%= car._id %>">
-            <input type="text"class="form-control" id="firstUsageDate-<%= car._id %>" value='<%=car.firstUsageDate%>' placeholder="Date de premiere mise en circulation">
-            <input type="text"class="form-control" id="parcEntreeDate-<%= car._id %>" value='<%=car.parcEntreeDate%>' placeholder="Date d'entrée dans le parc">
-            <input type="text"class="form-control" id="lastControleDate-<%= car._id %>" value='<%=car.lastControleDate%>' placeholder="Date du dernier controle technique">
+			<div class="form-group">
+				<label class="label">Date de premiere mise en circulation</label>
+				<input type="text" id="firstUsageDate-<%= car._id %>" value="<%=car.firstUsageDate%>" class="form-control" placeholder="Date de premiere mise en circulation">
+			</div>
+			
+			<div class="form-group">
+				<label class="label">Date d'entrée dans le parc</label>
+				<input type="text" id="parcEntreeDate-<%= car._id %>" value="<%=car.parcEntreeDate%>" class="form-control" placeholder="Date d'entrée dans le parc...">
+			</div>
+			
+			<div class="form-group">
+				<label class="label">Date du dernier controle technique</label>
+				<input type="text" id="lastControleDate-<%= car._id %>" value="<%=car.lastControleDate%>" class="form-control" placeholder="Date du dernier controle technique">
+			</div>
+			
             </div>
           </div>
           <div class="col-4">
-        <input type="number"class="form-control" id="doors-<%= car._id %>" value='<%=car.doors%>' placeholder="Nombres de portes">
-        <input type="number"class="form-control" id="places-<%= car._id %>" value='<%=car.places%>' placeholder="Nombre de places">
+			<div class="form-group">
+				<label class="label">Nombres de portes</label>
+				<input type="number" id="doors-<%= car._id %>" value="<%=car.doors%>" class="form-control" placeholder="Nombres de portes">
+			</div>		  
+			<div class="form-group">
+				<label class="label">Nombres de places</label>
+				<input type="number" id="places-<%= car._id %>" value="<%=car.places%>" class="form-control" placeholder="Nombres de places">
+			</div>
         <div id="updated-<%= car._id %>">
         </div>
       </div>
