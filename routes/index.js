@@ -664,9 +664,11 @@ function sendmails(depart, etape, dest, req, date, time) {
   var mailist = []
   user.find({$or:[{bestdepart: depart}, {bestdepart: etape}], bestdest: dest}, function (error, users) {
     users.forEach(function (user) {
+      console.log(user.email);
       mailist.push(user.email);
     });
   });
+  console.log('Maillist :'+maillist);
   var mailOptions = {
     from: 'easytraveltechera@gmail.com',
     to: mailist,
