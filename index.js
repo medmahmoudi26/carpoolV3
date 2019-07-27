@@ -178,6 +178,7 @@ io.sockets.on('connection', function(socket){
       var lastControleDate = car.lastControle;
       var doors = car.doors;
       var places = car.places;
+      var marque = car.marque;
       cars.findOneAndUpdate({_id: id},{$set:
         {
           mat              : mat,
@@ -186,7 +187,8 @@ io.sockets.on('connection', function(socket){
           parcEntreeDate   : parcEntreeDate,
           lastControleDate : lastControleDate,
           doors            : doors,
-          places           : places
+          places           : places,
+          marque           : marque
         }},
         {new: true}, function (error, updated) {
         if (error) socket.emit("error", error);
