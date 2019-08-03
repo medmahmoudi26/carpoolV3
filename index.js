@@ -174,8 +174,8 @@ io.sockets.on('connection', function(socket){
       var mat = car.mat;
       var energie = car.energie;
       var firstUsageDate = car.firstUsageDate;
-      var parcEntreeDate = car.parcEntree;
-      var lastControleDate = car.lastControle;
+      var parcEntreeDate = car.parcEntreeDate;
+      var lastControleDate = car.lastControleDate;
       var doors = car.doors;
       var places = car.places;
       var marque = car.marque;
